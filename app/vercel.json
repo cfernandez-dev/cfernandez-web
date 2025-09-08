@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "cristhian-fernandez-portfolio",
+  "name": "cristhian-fernandez",
   "builds": [
     {
       "src": "index.html",
@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/app/index.html"
     }
   ],
   "headers": [
