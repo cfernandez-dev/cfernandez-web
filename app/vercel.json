@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/app/index.html"
+      "dest": "/index.html"
     }
   ],
   "headers": [
@@ -65,10 +65,5 @@
         }
       ]
     }
-  ],
-  "functions": {
-    "app/api/contact.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
