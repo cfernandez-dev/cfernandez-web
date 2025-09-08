@@ -514,7 +514,7 @@ body {
     line-height: 1.6;
     color: var(--text-light);
     margin: 0.5rem 0;
-    text-align: justify;
+    text-align: center;
 }
 
 /* Contacto */
@@ -625,9 +625,12 @@ body {
     
     .section-text,
     .job-description p,
-    .degree-description p,
-    .skill-items p {
+    .degree-description p {
         text-align: justify;
+    }
+    
+    .skill-items p {
+        text-align: center;
     }
     
     .experience-item {
