@@ -1,10 +1,7 @@
-// Sistema de traducciones y funcionalidades del portfolio
-// Migrado desde el proyecto Dash original
-
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`sections/${sectionName}.html`);
+        const response = await fetch(`/app/sections/${sectionName}.html`);
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
