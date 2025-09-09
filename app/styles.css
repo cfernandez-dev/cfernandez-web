@@ -484,6 +484,24 @@ body {
     margin: 0;
 }
 
+.cert-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-left: 0.5rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.cert-link:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+    text-decoration: none;
+}
+
+.cert-link i {
+    font-size: 0.8rem;
+}
+
 /* Habilidades */
 .skills-grid {
     margin-top: 2rem;
