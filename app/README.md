@@ -160,6 +160,11 @@ Si tienes problemas:
 - Verifica la consola del navegador
 - Contacta: cefernal@gmail.com
 
+## Probar en local
+cd app
+python -m http.server 8080
+http://localhost:8080
+
 ## 📄 Licencia
 
 MIT License - Puedes usar este código libremente.
@@ -167,6 +172,6 @@ MIT License - Puedes usar este código libremente.
 ---
 
 **Desarrollado por:** Cristhian Fernandez Alvarez
-**Email:** cefernal@gmail.com  
+**Email:** cefernal.dev@gmail.com  
 **LinkedIn:** [cristhian-fernandez95](https://linkedin.com/in/cristhian-fernandez95)  
 **GitHub:** [cfernandez-dev](https://github.com/cfernandez-dev)
