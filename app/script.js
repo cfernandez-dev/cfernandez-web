@@ -380,84 +380,6 @@ function downloadCV() {
     window.open(cvUrl, '_blank');
 }
 
-// Función para detectar navegadores problemáticos
-function isProblematicBrowser() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const problematicBrowsers = [
-        'instagram', 'fbav', 'fban', 'fbios', 'twitter', 
-        'tiktok', 'snapchat', 'whatsapp', 'telegram', 'line'
-    ];
-    
-    return problematicBrowsers.some(browser => userAgent.includes(browser));
-}
-
-// Función para mostrar mensaje de compatibilidad
-function showCompatibilityMessage() {
-    const container = document.getElementById('main-content');
-    if (container) {
-        const message = document.createElement('div');
-        message.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                padding: 2rem;
-                box-sizing: border-box;
-            ">
-                <div style="
-                    background: white;
-                    padding: 2rem;
-                    border-radius: 8px;
-                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                    max-width: 500px;
-                    text-align: center;
-                ">
-                    <h2 style="color: #2563eb; margin-bottom: 1rem;">Cristhian Fernandez</h2>
-                    <h3 style="color: #64748b; margin-bottom: 1.5rem;">AI / ML Engineer</h3>
-                    <p style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
-                        Esta página funciona mejor en un navegador externo. 
-                        Toca el botón de abajo para abrir en tu navegador predeterminado.
-                    </p>
-                    <button onclick="openInExternalBrowser()" style="
-                        background-color: #2563eb;
-                        color: white;
-                        border: none;
-                        padding: 0.75rem 1.5rem;
-                        border-radius: 8px;
-                        font-weight: 500;
-                        cursor: pointer;
-                        font-size: 1rem;
-                    ">
-                        Abrir en navegador externo
-                    </button>
-                </div>
-            </div>
-        `;
-        container.appendChild(message);
-    }
-}
-
-// Función para abrir en navegador externo
-function openInExternalBrowser() {
-    const currentUrl = window.location.href;
-    
-    try {
-        window.open(currentUrl, '_blank');
-    } catch (e) {
-        try {
-            window.location.href = currentUrl;
-        } catch (e2) {
-            alert('Por favor, copia esta URL y ábrela en tu navegador: ' + currentUrl);
-        }
-    }
-}
 
 // Función para manejar el scroll suave
 function handleSmoothScroll() {
@@ -569,12 +491,6 @@ async function initializeApp() {
         // Configurar scroll suave
         handleSmoothScroll();
         
-        // Detectar navegadores problemáticos
-        if (isProblematicBrowser()) {
-            setTimeout(() => {
-                showCompatibilityMessage();
-            }, 2000);
-        }
         
     } catch (error) {
         console.error('Error en inicialización:', error);
@@ -623,31 +539,6 @@ function setupEventListeners() {
     window.addEventListener('hashchange', handleUrlHash);
 }
 
-// Función para mejorar la compatibilidad con Instagram
-function enhanceInstagramCompatibility() {
-    if (isProblematicBrowser()) {
-        // Agregar estilos adicionales para Instagram
-        const style = document.createElement('style');
-        style.textContent = `
-            body {
-                -webkit-overflow-scrolling: touch;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-            }
-            
-            .app-container {
-                -webkit-overflow-scrolling: touch;
-                overflow-x: hidden;
-            }
-            
-            * {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
 
 // Función de seguridad para mostrar la página
 function forceShowPage() {
@@ -665,19 +556,8 @@ function forceShowPage() {
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        enhanceInstagramCompatibility();
         initializeApp();
     });
 } else {
-    enhanceInstagramCompatibility();
     initializeApp();
 }
-
-// También verificar cuando la ventana se carga completamente
-window.addEventListener('load', () => {
-    if (isProblematicBrowser()) {
-        setTimeout(() => {
-            showCompatibilityMessage();
-        }, 1000);
-    }
-});

@@ -1,0 +1,49 @@
+/* Iconos SVG - Reemplazo de Font Awesome */
+.fas, .fab, .far, .fal, .fad {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.fas::before, .fab::before, .far::before, .fal::before, .fad::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Clases específicas para cada icono */
+.fa-envelope::before {
+  background-image: url('./envelope.svg');
+}
+
+.fa-phone::before {
+  background-image: url('./phone.svg');
+}
+
+.fa-map-marker-alt::before {
+  background-image: url('./location.svg');
+}
+
+.fa-linkedin::before {
+  background-image: url('./linkedin.svg');
+}
+
+.fa-github::before {
+  background-image: url('./github.svg');
+}
+
+.fa-file-pdf::before {
+  background-image: url('./pdf.svg');
+}
+
+.fa-aws::before {
+  background-image: url('./aws.svg');
+}
+
+.fa-external-link-alt::before {
+  background-image: url('./external-link.svg');
+}
