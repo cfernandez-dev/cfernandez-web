@@ -74,56 +74,70 @@
     <div id="main-content" class="app-container">
         <!-- Header Section - Se carga dinámicamente -->
         <div id="header-container">
+            <!-- Contenido visible inmediatamente para webviews -->
+            <header class="header-section" id="immediate-header">
+                <div class="container">
+                    <div class="header-content">
+                        <h1>Cristhian Fernández Álvarez</h1>
+                        <p class="header-subtitle">Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud</p>
+                        <div class="header-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Cali, Colombia</p>
+                            <p><i class="fas fa-envelope"></i> cefernal.dev@gmail.com</p>
+                            <p><i class="fas fa-phone"></i> (+57) 312 238 2462</p>
+                        </div>
+                        <a href="pdf/CV - cfernandez ESP 2025.pdf" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Descargar CV
+                        </a>
+                    </div>
+                </div>
+            </header>
+            
             <!-- Fallback content para cuando JavaScript no funcione -->
             <noscript>
-                <header class="header-section">
-                    <div class="container">
-                        <div class="header-content">
-                            <h1>Cristhian Fernández Álvarez</h1>
-                            <p class="header-subtitle">Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud</p>
-                            <div class="header-info">
-                                <p><i class="fas fa-map-marker-alt"></i> Cali, Colombia</p>
-                                <p><i class="fas fa-envelope"></i> cefernal.dev@gmail.com</p>
-                                <p><i class="fas fa-phone"></i> (+57) 312 238 2462</p>
-                            </div>
-                            <a href="pdf/CV - cfernandez ESP 2025.pdf" class="btn btn-primary" download>
-                                <i class="fas fa-download"></i> Descargar CV
-                            </a>
-                        </div>
-                    </div>
-                </header>
+                <div class="noscript-notice">
+                    <p><strong>Nota:</strong> Para la mejor experiencia, habilita JavaScript o abre este enlace en tu navegador principal.</p>
+                </div>
             </noscript>
         </div>
 
         <!-- Navigation - Se carga dinámicamente -->
         <div id="navigation-container">
-            <noscript>
-                <nav class="navigation">
-                    <div class="container">
-                        <ul class="nav-menu">
-                            <li><a href="#about" class="nav-link">Sobre Mí</a></li>
-                            <li><a href="#experience" class="nav-link">Experiencia</a></li>
-                            <li><a href="#education" class="nav-link">Formación</a></li>
-                            <li><a href="#skills" class="nav-link">Habilidades</a></li>
-                            <li><a href="#contact" class="nav-link">Contacto</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </noscript>
+            <!-- Navegación visible inmediatamente -->
+            <nav class="navigation" id="immediate-nav">
+                <div class="container">
+                    <ul class="nav-menu">
+                        <li><a href="#about" class="nav-link">Sobre Mí</a></li>
+                        <li><a href="#experience" class="nav-link">Experiencia</a></li>
+                        <li><a href="#education" class="nav-link">Formación</a></li>
+                        <li><a href="#skills" class="nav-link">Habilidades</a></li>
+                        <li><a href="#contact" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+            </nav>
         </div>
 
         <!-- Main Content -->
         <main class="main-content">
             <!-- About Section - Se carga dinámicamente -->
             <div id="about-container">
-                <noscript>
-                    <section id="about" class="section">
-                        <div class="container">
-                            <h2>Sobre Mí</h2>
-                            <p>Ingeniero especializado en Inteligencia Artificial, Machine Learning y desarrollo de soluciones basadas en datos. Con experiencia en visión artificial, procesamiento de lenguaje natural y cloud computing en AWS.</p>
+                <!-- Contenido visible inmediatamente -->
+                <section id="about" class="section immediate-content">
+                    <div class="container">
+                        <h2>Sobre Mí</h2>
+                        <p>Ingeniero especializado en Inteligencia Artificial, Machine Learning y desarrollo de soluciones basadas en datos. Con experiencia en visión artificial, procesamiento de lenguaje natural y cloud computing en AWS.</p>
+                        <div class="skills-preview">
+                            <h3>Habilidades Principales</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">Deep Learning</span>
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">Computer Vision</span>
+                                <span class="skill-tag">NLP</span>
+                            </div>
                         </div>
-                    </section>
-                </noscript>
+                    </div>
+                </section>
             </div>
 
             <!-- Experience Section - Se carga dinámicamente -->
@@ -164,16 +178,34 @@
 
             <!-- Contact Section - Se carga dinámicamente -->
             <div id="contact-container">
-                <noscript>
-                    <section id="contact" class="section">
-                        <div class="container">
-                            <h2>Contacto</h2>
-                            <p>Email: cefernal.dev@gmail.com</p>
-                            <p>Teléfono: (+57) 312 238 2462</p>
-                            <p>Ubicación: Cali, Colombia</p>
+                <!-- Contenido visible inmediatamente -->
+                <section id="contact" class="section immediate-content">
+                    <div class="container">
+                        <h2>Contacto</h2>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>cefernal.dev@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(+57) 312 238 2462</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Cali, Colombia</span>
+                            </div>
                         </div>
-                    </section>
-                </noscript>
+                        <div class="contact-actions">
+                            <a href="mailto:cefernal.dev@gmail.com" class="btn btn-primary">
+                                <i class="fas fa-envelope"></i> Enviar Email
+                            </a>
+                            <a href="https://wa.me/573122382462" class="btn btn-success" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>

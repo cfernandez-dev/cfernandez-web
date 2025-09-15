@@ -48,8 +48,23 @@ async function loadSection(sectionName, containerId) {
 }
 
 
+// Función para detectar si estamos en un webview de Instagram
+function isInstagramWebview() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.includes('instagram') || 
+           userAgent.includes('fbav') || 
+           userAgent.includes('fban') ||
+           userAgent.includes('fbsv');
+}
+
 // Función para cargar todas las secciones
 async function loadAllSections() {
+    // Si estamos en Instagram webview, mantener el contenido inmediato visible
+    if (isInstagramWebview()) {
+        console.log('Instagram webview detectado, manteniendo contenido estático');
+        return;
+    }
+
     const sections = [
         { name: 'header', container: 'header-container' },
         { name: 'navigation', container: 'navigation-container' },
@@ -427,8 +442,44 @@ function handleUrlHash() {
 }
 
 
+// Función para configurar navegación básica para webviews
+function setupBasicNavigation() {
+    const navLinks = document.querySelectorAll('#immediate-nav .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('href').substring(1);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
 // Función para inicializar la aplicación
 async function initializeApp() {
+    // Si estamos en Instagram webview, mostrar contenido inmediatamente
+    if (isInstagramWebview()) {
+        console.log('Instagram webview detectado, mostrando contenido estático');
+        
+        // Ocultar loading indicator inmediatamente
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+        
+        // Mostrar contenido principal
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
+        
+        // Configurar navegación básica para webview
+        setupBasicNavigation();
+        return;
+    }
+    
     // Cargar todas las secciones dinámicamente
     await loadAllSections();
     
