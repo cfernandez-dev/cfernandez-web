@@ -6,5 +6,18 @@
       "src": "**/*",
       "use": "@vercel/static"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.cfernandez.dev"
+        }
+      ],
+      "destination": "https://cfernandez.dev/$1",
+      "permanent": true
+    }
   ]
 }
