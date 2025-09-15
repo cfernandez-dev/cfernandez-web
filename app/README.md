@@ -3,6 +3,7 @@
 ## 🚀 Características
 
 - ✅ **100% Estático** - Sin dependencias de servidor
+- ✅ **Compatible con Instagram** - Funciona perfectamente en navegadores internos
 - ✅ **Responsive** - Optimizado para móviles y desktop
 - ✅ **Multiidioma** - Español e Inglés
 - ✅ **SEO Optimizado** - Meta tags completos
@@ -25,6 +26,9 @@
 - ✅ Firefox 88+
 - ✅ Safari 14+
 - ✅ Edge 90+
+- ✅ **Instagram in-app browser**
+- ✅ **Facebook in-app browser**
+- ✅ **Twitter in-app browser**
 
 ### Dispositivos
 - ✅ Desktop (1920px+)

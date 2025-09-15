@@ -3,54 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    
+    <!-- Meta tags para redes sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cristhian Fernandez - AI/ML Engineer">
+    <meta property="og:title" content="Cristhian Fernandez | AI / ML Engineer">
+    <meta property="og:description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/2563eb/ffffff?text=Cristhian+Fernandez">
+    <meta property="og:url" content="https://cristhianfernandez.dev">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Cristhian Fernandez | AI / ML Engineer">
+    <meta property="twitter:description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    <meta property="twitter:image" content="https://via.placeholder.com/1200x630/2563eb/ffffff?text=Cristhian+Fernandez">
+    
+    <!-- Meta tags adicionales para compatibilidad -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="theme-color" content="#2563eb">
+    
     <title>Cristhian Fernandez | AI / ML Engineer</title>
-    <meta http-equiv="refresh" content="0; url=app/">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background: #f0f0f0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #2563eb;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Cristhian Fernandez</h1>
-        <h2>AI / ML Engineer</h2>
+    <!-- Loading indicator -->
+    <div id="loading-indicator" class="loading-indicator">
         <div class="spinner"></div>
-        <p>Redirigiendo a la página principal...</p>
-        <p>Si no eres redirigido automáticamente, <a href="app/">haz clic aquí</a></p>
-        <p><small>Si ves un error 404, el problema está en la configuración del servidor.</small></p>
+        <p>Cargando...</p>
     </div>
+
+    <!-- Main content -->
+    <div id="main-content" class="app-container">
+        <!-- Header Section - Se carga dinámicamente -->
+        <div id="header-container"></div>
+
+        <!-- Navigation - Se carga dinámicamente -->
+        <div id="navigation-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- About Section - Se carga dinámicamente -->
+            <div id="about-container"></div>
+
+            <!-- Experience Section - Se carga dinámicamente -->
+            <div id="experience-container"></div>
+
+            <!-- Education Section - Se carga dinámicamente -->
+            <div id="education-container"></div>
+
+            <!-- Skills Section - Se carga dinámicamente -->
+            <div id="skills-container"></div>
+
+            <!-- Contact Section - Se carga dinámicamente -->
+            <div id="contact-container"></div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
 </body>
 </html>

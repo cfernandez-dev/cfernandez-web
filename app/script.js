@@ -1,48 +1,23 @@
 // Sistema de traducciones y funcionalidades del portfolio
 // Migrado desde el proyecto Dash original
 
-// Función para mostrar estado de depuración en pantalla
-function showDebugStatus(message) {
-    const debugStatus = document.getElementById('debug-status');
-    if (debugStatus) {
-        debugStatus.textContent = message;
-    }
-    console.log('DEBUG:', message);
-}
-
-// Función para actualizar texto de carga
-function updateLoadingText(text) {
-    const loadingText = document.getElementById('loading-text');
-    if (loadingText) {
-        loadingText.textContent = text;
-    }
-}
-
 // Función para cargar secciones dinámicamente
-async function loadSection(sectionName, containerId) { 
-    showDebugStatus(`Cargando sección: ${sectionName}`);
-    console.log(`Loading section: ${sectionName}`);
-    
-    const response = await fetch(`sections/${sectionName}.html`);
-    console.log(`Response for ${sectionName}:`, response.status, response.ok);
-    
-    if (!response.ok) {
-        showDebugStatus(`Error ${response.status} cargando ${sectionName}`);
-        throw new Error(`Error loading ${sectionName}: ${response.status}`);
+async function loadSection(sectionName, containerId) {
+    try {
+        const response = await fetch(`sections/${sectionName}.html`);
+        if (!response.ok) {
+            throw new Error(`Error loading ${sectionName}: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById(containerId).innerHTML = html;
+    } catch (error) {
+        console.error(`Error loading section ${sectionName}:`, error);
+        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
     }
-    
-    const html = await response.text();
-    console.log(`HTML loaded for ${sectionName}, length:`, html.length);
-    showDebugStatus(`Sección ${sectionName} cargada (${html.length} caracteres)`);
-    document.getElementById(containerId).innerHTML = html;
 }
 
 // Función para cargar todas las secciones
 async function loadAllSections() {
-    showDebugStatus('Iniciando carga de secciones...');
-    updateLoadingText('Cargando secciones...');
-    console.log('Starting to load all sections...');
-    
     const sections = [
         { name: 'header', container: 'header-container' },
         { name: 'navigation', container: 'navigation-container' },
@@ -53,16 +28,10 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
-    console.log('Sections to load:', sections);
-    showDebugStatus(`Cargando ${sections.length} secciones...`);
-    
     // Cargar todas las secciones en paralelo
     await Promise.all(sections.map(section => 
         loadSection(section.name, section.container)
     ));
-    
-    showDebugStatus('Todas las secciones cargadas exitosamente');
-    console.log('All sections loaded successfully');
 }
 
 // Traducciones completas
@@ -79,7 +48,7 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal.dev@gmail.com',
+        'header_email': 'cefernal@gmail.com',
         'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'CV',
         
@@ -203,7 +172,7 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Artificial Intelligence Specialist | Data Scientist | Computer Vision | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal.dev@gmail.com',
+        'header_email': 'cefernal@gmail.com',
         'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'Resume',
         
@@ -379,23 +348,90 @@ function showSection(sectionId) {
 
 // Función para manejar descarga de CV
 function downloadCV() {
-    // Seleccionar el CV correcto según el idioma actual
-    const cvUrl = currentLanguage === 'es' 
-        ? 'pdf/CV - cfernandez ESP 2025.pdf'
-        : 'pdf/CV - cfernandez ENG 2025.pdf';
-    
-    // Crear un enlace temporal para descargar el archivo
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = cvUrl.split('/').pop(); // Obtener solo el nombre del archivo
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Aquí puedes implementar la descarga del CV
+    // Por ejemplo, abrir un enlace directo al PDF
+    const cvUrl = 'https://your-domain.com/cv/Cristhian_Fernandez_CV.pdf';
+    window.open(cvUrl, '_blank');
 }
 
+// Función para detectar navegadores problemáticos
+function isProblematicBrowser() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const problematicBrowsers = [
+        'instagram', 'fbav', 'fban', 'fbios', 'twitter', 
+        'tiktok', 'snapchat', 'whatsapp', 'telegram', 'line'
+    ];
+    
+    return problematicBrowsers.some(browser => userAgent.includes(browser));
+}
 
+// Función para mostrar mensaje de compatibilidad
+function showCompatibilityMessage() {
+    const container = document.getElementById('main-content');
+    if (container) {
+        const message = document.createElement('div');
+        message.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                padding: 2rem;
+                box-sizing: border-box;
+            ">
+                <div style="
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 8px;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                    max-width: 500px;
+                    text-align: center;
+                ">
+                    <h2 style="color: #2563eb; margin-bottom: 1rem;">Cristhian Fernandez</h2>
+                    <h3 style="color: #64748b; margin-bottom: 1.5rem;">AI / ML Engineer</h3>
+                    <p style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
+                        Esta página funciona mejor en un navegador externo. 
+                        Toca el botón de abajo para abrir en tu navegador predeterminado.
+                    </p>
+                    <button onclick="openInExternalBrowser()" style="
+                        background-color: #2563eb;
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 8px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        font-size: 1rem;
+                    ">
+                        Abrir en navegador externo
+                    </button>
+                </div>
+            </div>
+        `;
+        container.appendChild(message);
+    }
+}
 
+// Función para abrir en navegador externo
+function openInExternalBrowser() {
+    const currentUrl = window.location.href;
+    
+    try {
+        window.open(currentUrl, '_blank');
+    } catch (e) {
+        try {
+            window.location.href = currentUrl;
+        } catch (e2) {
+            alert('Por favor, copia esta URL y ábrela en tu navegador: ' + currentUrl);
+        }
+    }
+}
 
 // Función para manejar el scroll suave
 function handleSmoothScroll() {
@@ -419,48 +455,19 @@ function handleUrlHash() {
 
 // Función para inicializar la aplicación
 async function initializeApp() {
-    showDebugStatus('Inicializando aplicación...');
-    updateLoadingText('Iniciando...');
-    console.log('Initializing app...');
-    
-    try {
-        // Cargar todas las secciones dinámicamente
-        showDebugStatus('Cargando secciones...');
-        updateLoadingText('Cargando contenido...');
-        console.log('Loading sections...');
-        await loadAllSections();
-        showDebugStatus('Secciones cargadas exitosamente');
-        console.log('Sections loaded successfully');
-    } catch (error) {
-        showDebugStatus(`ERROR: ${error.message}`);
-        updateLoadingText('Error de carga');
-        console.error('Error loading sections:', error);
-        throw error; // Re-lanzar el error para depuración
-    }
+    // Cargar todas las secciones dinámicamente
+    await loadAllSections();
     
     // Ocultar loading indicator
-    showDebugStatus('Ocultando indicador de carga...');
-    updateLoadingText('Finalizando...');
-    console.log('Hiding loading indicator...');
     const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
-        console.log('Loading indicator hidden');
-    } else {
-        showDebugStatus('ERROR: Indicador de carga no encontrado');
-        console.error('Loading indicator not found!');
     }
     
     // Mostrar contenido principal
-    showDebugStatus('Mostrando contenido principal...');
-    console.log('Showing main content...');
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
         mainContent.style.display = 'block';
-        console.log('Main content shown');
-    } else {
-        showDebugStatus('ERROR: Contenido principal no encontrado');
-        console.error('Main content not found!');
     }
     
     // Cargar idioma guardado
@@ -485,8 +492,12 @@ async function initializeApp() {
     // Configurar scroll suave
     handleSmoothScroll();
     
-    showDebugStatus('Aplicación inicializada exitosamente');
-    console.log('App initialized successfully');
+    // Detectar navegadores problemáticos
+    if (isProblematicBrowser()) {
+        setTimeout(() => {
+            showCompatibilityMessage();
+        }, 2000);
+    }
 }
 
 // Función para configurar event listeners
@@ -522,38 +533,48 @@ function setupEventListeners() {
     window.addEventListener('hashchange', handleUrlHash);
 }
 
-
-// Función para mostrar error simple
-function showSimpleError(message) {
-    document.body.innerHTML = `
-        <div style="padding: 20px; font-family: Arial, sans-serif; background: #ffebee; text-align: center; color: #d32f2f;">
-            <h1>Error</h1>
-            <p>${message}</p>
-            <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
-        </div>
-    `;
+// Función para mejorar la compatibilidad con Instagram
+function enhanceInstagramCompatibility() {
+    if (isProblematicBrowser()) {
+        // Agregar estilos adicionales para Instagram
+        const style = document.createElement('style');
+        style.textContent = `
+            body {
+                -webkit-overflow-scrolling: touch;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            
+            .app-container {
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+            }
+            
+            * {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
 
 // Inicializar cuando el DOM esté listo
-try {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM Content Loaded - iniciando app');
-            showDebugStatus('DOM cargado, iniciando aplicación...');
-            initializeApp().catch(error => {
-                console.error('Error inicializando app:', error);
-                showSimpleError(`Error: ${error.message}`);
-            });
-        });
-    } else {
-        console.log('DOM already loaded - iniciando app');
-        showDebugStatus('DOM ya cargado, iniciando aplicación...');
-        initializeApp().catch(error => {
-            console.error('Error inicializando app:', error);
-            showSimpleError(`Error: ${error.message}`);
-        });
-    }
-} catch (error) {
-    console.error('Error crítico en inicialización:', error);
-    showSimpleError(`Error crítico: ${error.message}`);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        enhanceInstagramCompatibility();
+        initializeApp();
+    });
+} else {
+    enhanceInstagramCompatibility();
+    initializeApp();
 }
+
+// También verificar cuando la ventana se carga completamente
+window.addEventListener('load', () => {
+    if (isProblematicBrowser()) {
+        setTimeout(() => {
+            showCompatibilityMessage();
+        }, 1000);
+    }
+});
