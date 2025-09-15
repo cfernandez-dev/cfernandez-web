@@ -48,6 +48,13 @@
         </div>
     </div>
 
+    <!-- Test básico sin JavaScript -->
+    <div id="basic-test" style="display: none; padding: 20px; background: #e3f2fd; margin: 20px; border-radius: 8px; text-align: center;">
+        <h2>Test Básico</h2>
+        <p>Si ves esto, el HTML funciona pero JavaScript no.</p>
+        <p id="test-time"></p>
+    </div>
+
     <!-- Main content -->
     <div id="main-content" class="app-container">
         <!-- Header Section - Se carga dinámicamente -->
@@ -76,6 +83,37 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        // Test inmediato - se ejecuta antes que script.js
+        console.log('Script inline ejecutándose...');
+        
+        // Mostrar test básico después de 3 segundos si no hay respuesta
+        setTimeout(function() {
+            console.log('Timeout - mostrando test básico');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const basicTest = document.getElementById('basic-test');
+            const testTime = document.getElementById('test-time');
+            
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+            if (basicTest) {
+                basicTest.style.display = 'block';
+            }
+            if (testTime) {
+                testTime.textContent = 'Tiempo: ' + new Date().toLocaleTimeString();
+            }
+        }, 3000);
+        
+        // Test de JavaScript básico
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - JavaScript funciona');
+            const debugStatus = document.getElementById('debug-status');
+            if (debugStatus) {
+                debugStatus.textContent = 'JavaScript funciona - DOM cargado';
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

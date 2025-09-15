@@ -523,42 +523,37 @@ function setupEventListeners() {
 }
 
 
+// Función para mostrar error simple
+function showSimpleError(message) {
+    document.body.innerHTML = `
+        <div style="padding: 20px; font-family: Arial, sans-serif; background: #ffebee; text-align: center; color: #d32f2f;">
+            <h1>Error</h1>
+            <p>${message}</p>
+            <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
+        </div>
+    `;
+}
+
 // Inicializar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        showDebugStatus('DOM cargado, iniciando aplicación...');
-        console.log('DOM Content Loaded');
-        initializeApp().catch(error => {
-            showDebugStatus(`ERROR CRÍTICO: ${error.message}`);
-            updateLoadingText('Error de carga');
-            console.error('Failed to initialize app:', error);
-            // Mostrar error en pantalla para depuración
-            document.body.innerHTML = `
-                <div style="padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; text-align: center;">
-                    <h1 style="color: #d32f2f;">Error de Carga</h1>
-                    <p><strong>Error:</strong> ${error.message}</p>
-                    <p><strong>Detalles:</strong></p>
-                    <pre style="background: white; padding: 10px; border-radius: 5px; text-align: left; overflow-x: auto;">${error.stack}</pre>
-                    <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
-                </div>
-            `;
+try {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded - iniciando app');
+            showDebugStatus('DOM cargado, iniciando aplicación...');
+            initializeApp().catch(error => {
+                console.error('Error inicializando app:', error);
+                showSimpleError(`Error: ${error.message}`);
+            });
         });
-    });
-} else {
-    showDebugStatus('DOM ya cargado, iniciando aplicación...');
-    console.log('DOM already loaded');
-    initializeApp().catch(error => {
-        showDebugStatus(`ERROR CRÍTICO: ${error.message}`);
-        updateLoadingText('Error de carga');
-        console.error('Failed to initialize app:', error);
-        document.body.innerHTML = `
-            <div style="padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; text-align: center;">
-                <h1 style="color: #d32f2f;">Error de Carga</h1>
-                <p><strong>Error:</strong> ${error.message}</p>
-                <p><strong>Detalles:</strong></p>
-                <pre style="background: white; padding: 10px; border-radius: 5px; text-align: left; overflow-x: auto;">${error.stack}</pre>
-                <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
-            </div>
-        `;
-    });
+    } else {
+        console.log('DOM already loaded - iniciando app');
+        showDebugStatus('DOM ya cargado, iniciando aplicación...');
+        initializeApp().catch(error => {
+            console.error('Error inicializando app:', error);
+            showSimpleError(`Error: ${error.message}`);
+        });
+    }
+} catch (error) {
+    console.error('Error crítico en inicialización:', error);
+    showSimpleError(`Error crítico: ${error.message}`);
 }
