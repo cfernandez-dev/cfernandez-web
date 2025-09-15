@@ -48,7 +48,7 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal@gmail.com',
+        'header_email': 'cefernal.dev@gmail.com',
         'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'CV',
         
@@ -172,7 +172,7 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Artificial Intelligence Specialist | Data Scientist | Computer Vision | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal@gmail.com',
+        'header_email': 'cefernal.dev@gmail.com',
         'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'Resume',
         
@@ -348,9 +348,10 @@ function showSection(sectionId) {
 
 // Función para manejar descarga de CV
 function downloadCV() {
-    // Aquí puedes implementar la descarga del CV
-    // Por ejemplo, abrir un enlace directo al PDF
-    const cvUrl = 'https://your-domain.com/cv/Cristhian_Fernandez_CV.pdf';
+    const fileName = currentLanguage === 'en'
+        ? 'CV - cfernandez ENG 2025.pdf'
+        : 'CV - cfernandez ESP 2025.pdf';
+    const cvUrl = `pdf/${encodeURIComponent(fileName)}`;
     window.open(cvUrl, '_blank');
 }
 

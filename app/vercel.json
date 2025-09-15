@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "cristhian-fernandez-portfolio",
+  "name": "cfernandez-dev",
   "builds": [
     {
       "src": "**/*",
