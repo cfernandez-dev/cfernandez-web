@@ -1,5 +1,5 @@
 // Service Worker para cache offline
-const CACHE_NAME = 'cfernandez-portfolio-v1';
+const CACHE_NAME = 'cfernandez-portfolio-v2';
 const urlsToCache = [
   '/',
   '/index.html',
