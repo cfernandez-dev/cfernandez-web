@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test de compatibilidad con Instagram">
+    
+    <!-- Meta tags optimizados para redes sociales -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cristhian Fernandez - AI/ML Engineer">
+    <meta property="og:title" content="Cristhian Fernandez | AI / ML Engineer">
+    <meta property="og:description" content="Especialista en Inteligencia Artificial, Machine Learning y Ciencia de Datos. Más de 10 años de experiencia profesional.">
+    <meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIHZpZXdCb3g9IjAgMCAxMjAwIDYzMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNjMwIiBmaWxsPSIjZjVmN2ZhIi8+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgZmlsbD0idXJsKCNncmFkaWVudCkiLz4KPHRleHQgeD0iNjAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzBmMTcyYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q3Jpc3RoaWFuIEZlcm7DoW5kZXo8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM2NDc0OGIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJIC8gTUwgRW5naW5lZXI8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iNDAwIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM5NGEzYjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVzcGVjaWFsaXN0YSBlbiBJbnRlbGlnZW5jaWEgQXJ0aWZpY2lhbDwvdGV4dD4KPHRleHQgeD0iNjAwIiB5PSI0NTAiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzk0YTNiOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TW9yZSB0aGFuIDEwIHllYXJzIG9mIHByb2Zlc3Npb25hbCBleHBlcmllbmNlPC90ZXh0Pgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMTIwMCIgeTI9IjYzMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjZjVmN2ZhIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2MzY2ZlMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPg==">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Cristhian Fernandez - AI/ML Engineer Portfolio">
+    <meta property="og:url" content="https://cfernandez.dev">
+    <meta property="og:locale" content="es_ES">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@cfernandez_dev">
+    <meta property="twitter:creator" content="@cfernandez_dev">
+    <meta property="twitter:title" content="Cristhian Fernandez | AI / ML Engineer">
+    <meta property="twitter:description" content="Especialista en Inteligencia Artificial, Machine Learning y Ciencia de Datos.">
+    <meta property="twitter:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIHZpZXdCb3g9IjAgMCAxMjAwIDYzMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNjMwIiBmaWxsPSIjZjVmN2ZhIi8+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgZmlsbD0idXJsKCNncmFkaWVudCkiLz4KPHRleHQgeD0iNjAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzBmMTcyYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q3Jpc3RoaWFuIEZlcm7DoW5kZXo8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzAwIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM2NDc0OGIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJIC8gTUwgRW5naW5lZXI8L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iNDAwIiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM5NGEzYjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVzcGVjaWFsaXN0YSBlbiBJbnRlbGlnZW5jaWEgQXJ0aWZpY2lhbDwvdGV4dD4KPHRleHQgeD0iNjAwIiB5PSI0NTAiIGZvbnQtZmFtaWx5PSJJbnRlciwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzk0YTNiOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TW9yZSB0aGFuIDEwIHllYXJzIG9mIHByb2Zlc3Npb25hbCBleHBlcmllbmNlPC90ZXh0Pgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMTIwMCIgeTI9IjYzMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjZjVmN2ZhIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2MzY2ZlMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPg==">
+    
+    <title>Test Instagram - Cristhian Fernandez | AI / ML Engineer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    
+    <!-- Meta tags adicionales para Instagram -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #0f172a;
+            background-color: #ffffff;
+            font-size: 16px;
+            margin: 0;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2563eb;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .status {
+            background-color: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background-color: #f0fdf4;
+            border-color: #22c55e;
+            color: #166534;
+        }
+        
+        .error {
+            background-color: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        .info {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .test-link {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px;
+            font-weight: 500;
+        }
+        
+        .test-link:hover {
+            background-color: #1d4ed8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Compatibilidad con Instagram</h1>
+        
+        <div class="status success">
+            <h2>✅ Página Optimizada</h2>
+            <p>Esta página ha sido optimizada para funcionar correctamente en Instagram y otras redes sociales.</p>
+        </div>
+        
+        <div class="info">
+            <h3>🔧 Mejoras Implementadas:</h3>
+            <ul>
+                <li>✅ Meta tags Open Graph completos y optimizados</li>
+                <li>✅ Imagen Open Graph en formato SVG embebido</li>
+                <li>✅ Meta tags de Twitter Card configurados</li>
+                <li>✅ Estilos CSS optimizados para navegadores móviles</li>
+                <li>✅ JavaScript compatible con Instagram</li>
+                <li>✅ Fuentes con fallbacks para mejor compatibilidad</li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <h3>📱 Información del Navegador:</h3>
+            <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+            <p><strong>Es Instagram:</strong> <span id="is-instagram"></span></p>
+            <p><strong>URL Actual:</strong> <span id="current-url"></span></p>
+        </div>
+        
+        <div class="info">
+            <h3>🔗 Enlaces de Prueba:</h3>
+            <a href="index.html" class="test-link">Página Principal</a>
+            <a href="instagram.html" class="test-link">Versión Instagram</a>
+            <a href="https://miltonln.dev/" class="test-link" target="_blank">Página de Referencia</a>
+        </div>
+        
+        <div class="info">
+            <h3>📋 Instrucciones para Probar:</h3>
+            <ol>
+                <li>Copia la URL de esta página</li>
+                <li>Pégala en una historia o post de Instagram</li>
+                <li>Verifica que se muestre la vista previa correctamente</li>
+                <li>Haz clic en el enlace para abrir la página</li>
+                <li>Confirma que la página se carga completamente</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Mostrar información del navegador
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        document.getElementById('current-url').textContent = window.location.href;
+        
+        // Detectar si es Instagram
+        function isInstagramBrowser() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.includes('instagram') || 
+                   userAgent.includes('fbav') || 
+                   userAgent.includes('fban') ||
+                   window.location.href.includes('l.instagram.com') ||
+                   window.location.href.includes('instagram.com');
+        }
+        
+        document.getElementById('is-instagram').textContent = isInstagramBrowser() ? 'Sí' : 'No';
+        
+        // Aplicar estilos específicos si es Instagram
+        if (isInstagramBrowser()) {
+            document.body.classList.add('instagram-browser');
+            console.log('✅ Detectado navegador de Instagram');
+        }
+    </script>
+</body>
+</html>

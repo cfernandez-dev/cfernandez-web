@@ -7,8 +7,10 @@ function isInstagramBrowser() {
     return userAgent.includes('instagram') || 
            userAgent.includes('fbav') || 
            userAgent.includes('fban') ||
+           userAgent.includes('fbsv') ||
            window.location.href.includes('l.instagram.com') ||
-           window.location.href.includes('instagram.com');
+           window.location.href.includes('instagram.com') ||
+           document.referrer.includes('instagram.com');
 }
 
 // Function to redirect to Instagram optimized version
