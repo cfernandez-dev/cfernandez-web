@@ -553,15 +553,6 @@ function forceShowPage() {
     }
 }
 
-// Limpiar Service Worker anterior si existe
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-        registrations.forEach((registration) => {
-            registration.unregister();
-        });
-    });
-}
-
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {

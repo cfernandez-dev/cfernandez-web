@@ -72,30 +72,5 @@
     <!-- Scripts -->
     <script src="script.js"></script>
     
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Limpiar cache anterior
-                caches.keys().then((cacheNames) => {
-                    cacheNames.forEach((cacheName) => {
-                        if (cacheName.startsWith('cfernandez-portfolio-')) {
-                            caches.delete(cacheName);
-                        }
-                    });
-                });
-                
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registrado:', registration);
-                        // Forzar actualización
-                        registration.update();
-                    })
-                    .catch((error) => {
-                        console.log('Error SW:', error);
-                    });
-            });
-        }
-    </script>
 </body>
 </html>
