@@ -85,6 +85,7 @@ body {
 .header-section {
     text-align: center;
     margin-bottom: 1rem;
+    position: relative;
 }
 
 .hero-section {
@@ -121,6 +122,12 @@ body {
 /* Language Selector */
 .language-selector-container {
     margin: 1rem 0;
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .language-label {
@@ -600,6 +607,10 @@ body {
     .section-content {
         padding: 0 1rem;
     }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
     
     .experience-item {
         padding-left: 1rem;
@@ -632,6 +643,10 @@ body {
     }
     
     .section-content {
+        padding: 0 1.25rem;
+    }
+
+    .hero-content {
         padding: 0 1.25rem;
     }
     .hero-title {
