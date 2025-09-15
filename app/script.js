@@ -4,7 +4,7 @@
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`sections/${sectionName}.html`);
+        const response = await fetch(`./sections/${sectionName}.html`);
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
