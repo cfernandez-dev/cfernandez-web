@@ -8,7 +8,7 @@ async function loadSection(sectionName, containerId) {
         container.innerHTML = '<div class="text-muted">Cargando…</div>';
     }
     try {
-        const response = await fetch(`./sections/${sectionName}.html`);
+        const response = await fetch(`./sections/${sectionName}.html`, { cache: 'no-store' });
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
