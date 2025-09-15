@@ -1,7 +1,88 @@
+// Función para obtener contenido de fallback cuando no se puede cargar una sección
+function getFallbackContent(sectionName) {
+    const fallbackContent = {
+        'header': `
+            <header class="header-section">
+                <div class="container">
+                    <h1>Cristhian Fernández Álvarez</h1>
+                    <p class="subtitle">Especialista en Inteligencia Artificial | Científico de Datos</p>
+                    <p class="location">Cali, Colombia</p>
+                    <div class="contact-info">
+                        <a href="mailto:cefernal.dev@gmail.com">cefernal.dev@gmail.com</a>
+                        <a href="tel:+573122382462">(+57) 312 238 2462</a>
+                    </div>
+                </div>
+            </header>
+        `,
+        'navigation': `
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#about" data-section="about">Sobre Mí</a></li>
+                    <li><a href="#experience" data-section="experience">Experiencia</a></li>
+                    <li><a href="#education" data-section="education">Formación</a></li>
+                    <li><a href="#skills" data-section="skills">Habilidades</a></li>
+                    <li><a href="#contact" data-section="contact">Contacto</a></li>
+                </ul>
+            </nav>
+        `,
+        'about': `
+            <section id="about" class="section">
+                <div class="container">
+                    <h2>Sobre Mí</h2>
+                    <p>Ingeniero especializado en Inteligencia Artificial y Machine Learning.</p>
+                </div>
+            </section>
+        `,
+        'experience': `
+            <section id="experience" class="section">
+                <div class="container">
+                    <h2>Experiencia</h2>
+                    <p>Experiencia profesional en desarrollo de soluciones de IA.</p>
+                </div>
+            </section>
+        `,
+        'education': `
+            <section id="education" class="section">
+                <div class="container">
+                    <h2>Formación</h2>
+                    <p>Formación académica en ingeniería y especialización en IA.</p>
+                </div>
+            </section>
+        `,
+        'skills': `
+            <section id="skills" class="section">
+                <div class="container">
+                    <h2>Habilidades</h2>
+                    <p>Habilidades técnicas en Python, Machine Learning, y desarrollo web.</p>
+                </div>
+            </section>
+        `,
+        'contact': `
+            <section id="contact" class="section">
+                <div class="container">
+                    <h2>Contacto</h2>
+                    <p>Puedes contactarme a través de email o teléfono.</p>
+                </div>
+            </section>
+        `
+    };
+    
+    return fallbackContent[sectionName] || `<div class="section"><div class="container"><p>Contenido no disponible</p></div></div>`;
+}
+
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`sections/${sectionName}.html`);
+        // Crear un timeout para evitar que se quede cargando indefinidamente
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
+        
+        const response = await fetch(`sections/${sectionName}.html`, {
+            signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
@@ -9,7 +90,8 @@ async function loadSection(sectionName, containerId) {
         document.getElementById(containerId).innerHTML = html;
     } catch (error) {
         console.error(`Error loading section ${sectionName}:`, error);
-        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
+        // Mostrar contenido de fallback en lugar de error
+        document.getElementById(containerId).innerHTML = getFallbackContent(sectionName);
     }
 }
 
@@ -386,9 +468,31 @@ function handleUrlHash() {
 
 // Función para inicializar la aplicación
 async function initializeApp() {
-    // Cargar todas las secciones dinámicamente
-    await loadAllSections();
-    
+    try {
+        // Crear un timeout global para evitar que se quede cargando indefinidamente
+        const globalTimeout = setTimeout(() => {
+            console.warn('Timeout: Forzando finalización de carga');
+            finishLoading();
+        }, 10000); // 10 segundos máximo
+        
+        // Cargar todas las secciones dinámicamente
+        await loadAllSections();
+        
+        // Limpiar timeout si todo carga correctamente
+        clearTimeout(globalTimeout);
+        
+        // Finalizar carga
+        finishLoading();
+        
+    } catch (error) {
+        console.error('Error durante la inicialización:', error);
+        // Aún así, finalizar la carga para mostrar lo que se pueda
+        finishLoading();
+    }
+}
+
+// Función para finalizar la carga
+function finishLoading() {
     // Ocultar loading indicator
     const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingIndicator) {
