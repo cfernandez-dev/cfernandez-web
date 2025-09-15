@@ -1,24 +1,48 @@
 // Sistema de traducciones y funcionalidades del portfolio
 // Migrado desde el proyecto Dash original
 
+// Función para mostrar estado de depuración en pantalla
+function showDebugStatus(message) {
+    const debugStatus = document.getElementById('debug-status');
+    if (debugStatus) {
+        debugStatus.textContent = message;
+    }
+    console.log('DEBUG:', message);
+}
+
+// Función para actualizar texto de carga
+function updateLoadingText(text) {
+    const loadingText = document.getElementById('loading-text');
+    if (loadingText) {
+        loadingText.textContent = text;
+    }
+}
+
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) { 
+    showDebugStatus(`Cargando sección: ${sectionName}`);
     console.log(`Loading section: ${sectionName}`);
+    
     const response = await fetch(`sections/${sectionName}.html`);
     console.log(`Response for ${sectionName}:`, response.status, response.ok);
     
     if (!response.ok) {
+        showDebugStatus(`Error ${response.status} cargando ${sectionName}`);
         throw new Error(`Error loading ${sectionName}: ${response.status}`);
     }
     
     const html = await response.text();
     console.log(`HTML loaded for ${sectionName}, length:`, html.length);
+    showDebugStatus(`Sección ${sectionName} cargada (${html.length} caracteres)`);
     document.getElementById(containerId).innerHTML = html;
 }
 
 // Función para cargar todas las secciones
 async function loadAllSections() {
+    showDebugStatus('Iniciando carga de secciones...');
+    updateLoadingText('Cargando secciones...');
     console.log('Starting to load all sections...');
+    
     const sections = [
         { name: 'header', container: 'header-container' },
         { name: 'navigation', container: 'navigation-container' },
@@ -30,12 +54,14 @@ async function loadAllSections() {
     ];
 
     console.log('Sections to load:', sections);
+    showDebugStatus(`Cargando ${sections.length} secciones...`);
     
     // Cargar todas las secciones en paralelo
     await Promise.all(sections.map(section => 
         loadSection(section.name, section.container)
     ));
     
+    showDebugStatus('Todas las secciones cargadas exitosamente');
     console.log('All sections loaded successfully');
 }
 
@@ -393,35 +419,47 @@ function handleUrlHash() {
 
 // Función para inicializar la aplicación
 async function initializeApp() {
+    showDebugStatus('Inicializando aplicación...');
+    updateLoadingText('Iniciando...');
     console.log('Initializing app...');
     
     try {
         // Cargar todas las secciones dinámicamente
+        showDebugStatus('Cargando secciones...');
+        updateLoadingText('Cargando contenido...');
         console.log('Loading sections...');
         await loadAllSections();
+        showDebugStatus('Secciones cargadas exitosamente');
         console.log('Sections loaded successfully');
     } catch (error) {
+        showDebugStatus(`ERROR: ${error.message}`);
+        updateLoadingText('Error de carga');
         console.error('Error loading sections:', error);
         throw error; // Re-lanzar el error para depuración
     }
     
     // Ocultar loading indicator
+    showDebugStatus('Ocultando indicador de carga...');
+    updateLoadingText('Finalizando...');
     console.log('Hiding loading indicator...');
     const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
         console.log('Loading indicator hidden');
     } else {
+        showDebugStatus('ERROR: Indicador de carga no encontrado');
         console.error('Loading indicator not found!');
     }
     
     // Mostrar contenido principal
+    showDebugStatus('Mostrando contenido principal...');
     console.log('Showing main content...');
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
         mainContent.style.display = 'block';
         console.log('Main content shown');
     } else {
+        showDebugStatus('ERROR: Contenido principal no encontrado');
         console.error('Main content not found!');
     }
     
@@ -447,6 +485,7 @@ async function initializeApp() {
     // Configurar scroll suave
     handleSmoothScroll();
     
+    showDebugStatus('Aplicación inicializada exitosamente');
     console.log('App initialized successfully');
 }
 
@@ -487,30 +526,38 @@ function setupEventListeners() {
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
+        showDebugStatus('DOM cargado, iniciando aplicación...');
         console.log('DOM Content Loaded');
         initializeApp().catch(error => {
+            showDebugStatus(`ERROR CRÍTICO: ${error.message}`);
+            updateLoadingText('Error de carga');
             console.error('Failed to initialize app:', error);
             // Mostrar error en pantalla para depuración
             document.body.innerHTML = `
-                <div style="padding: 20px; font-family: monospace; background: #f0f0f0;">
-                    <h1>Error de Carga</h1>
+                <div style="padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; text-align: center;">
+                    <h1 style="color: #d32f2f;">Error de Carga</h1>
                     <p><strong>Error:</strong> ${error.message}</p>
-                    <p><strong>Stack:</strong></p>
-                    <pre>${error.stack}</pre>
+                    <p><strong>Detalles:</strong></p>
+                    <pre style="background: white; padding: 10px; border-radius: 5px; text-align: left; overflow-x: auto;">${error.stack}</pre>
+                    <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
                 </div>
             `;
         });
     });
 } else {
+    showDebugStatus('DOM ya cargado, iniciando aplicación...');
     console.log('DOM already loaded');
     initializeApp().catch(error => {
+        showDebugStatus(`ERROR CRÍTICO: ${error.message}`);
+        updateLoadingText('Error de carga');
         console.error('Failed to initialize app:', error);
         document.body.innerHTML = `
-            <div style="padding: 20px; font-family: monospace; background: #f0f0f0;">
-                <h1>Error de Carga</h1>
+            <div style="padding: 20px; font-family: Arial, sans-serif; background: #f0f0f0; text-align: center;">
+                <h1 style="color: #d32f2f;">Error de Carga</h1>
                 <p><strong>Error:</strong> ${error.message}</p>
-                <p><strong>Stack:</strong></p>
-                <pre>${error.stack}</pre>
+                <p><strong>Detalles:</strong></p>
+                <pre style="background: white; padding: 10px; border-radius: 5px; text-align: left; overflow-x: auto;">${error.stack}</pre>
+                <button onclick="location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; margin-top: 10px;">Reintentar</button>
             </div>
         `;
     });
