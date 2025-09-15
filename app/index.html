@@ -19,13 +19,6 @@
     <meta property="twitter:description" content="Especialista en Inteligencia Artificial, Machine Learning y Ciencia de Datos.">
     <meta property="twitter:image" content="https://cfernandez.dev/og-image.jpg">
     
-    <!-- Meta tags adicionales para compatibilidad -->
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="robots" content="index, follow">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <meta name="theme-color" content="#2563eb">
-    
     <title>Cristhian Fernandez | AI / ML Engineer</title>
     
     <!-- Favicon -->
@@ -43,40 +36,320 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading indicator -->
-    <div id="loading-indicator" class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Cargando...</p>
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="header_title">Cristhian Fernández Álvarez</h1>
+                <h2 class="hero-subtitle" data-translate="header_subtitle">Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud</h2>
+                
+                <!-- Language Selector -->
+                <div class="language-selector-container">
+                    <label for="language-selector" class="language-label" data-translate="language_selector">Idioma:</label>
+                    <select id="language-selector" class="language-selector">
+                        <option value="es" data-translate="language_es">Español</option>
+                        <option value="en" data-translate="language_en">English</option>
+                    </select>
     </div>
 
-    <!-- Main content -->
-    <div id="main-content" class="app-container">
-        <!-- Header Section - Se carga dinámicamente -->
-        <div id="header-container"></div>
+                <!-- Social Links -->
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/cristhian-fernandez95" class="social-link" target="_blank" rel="noopener">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/cfernandez-dev" class="social-link" target="_blank" rel="noopener">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="mailto:cefernal@gmail.com" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </a>
+                    <a href="pdf/CV - cfernandez ESP 2025.pdf" class="social-link" download>
+                        <i class="fas fa-file-pdf"></i>
+                        <span data-translate="btn_cv">CV</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
-        <!-- Navigation - Se carga dinámicamente -->
-        <div id="navigation-container"></div>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#about" class="nav-link" data-translate="nav_about">Sobre Mí</a>
+            </li>
+            <li class="nav-item">
+                <a href="#experience" class="nav-link" data-translate="nav_experience">Experiencia</a>
+            </li>
+            <li class="nav-item">
+                <a href="#education" class="nav-link" data-translate="nav_education">Educación</a>
+            </li>
+            <li class="nav-item">
+                <a href="#skills" class="nav-link" data-translate="nav_skills">Habilidades</a>
+            </li>
+            <li class="nav-item">
+                <a href="#contact" class="nav-link" data-translate="nav_contact">Contacto</a>
+            </li>
+        </ul>
+    </nav>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- About Section - Se carga dinámicamente -->
-            <div id="about-container"></div>
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="about_title">Sobre Mí</h2>
+                <div class="about-content">
+                    <p class="section-text" data-translate="about_text_1">
+                        Ingeniero electrónico con maestría en automatización y más de 10 años de experiencia profesional, 
+                        combinando 5 años en ciencia de datos y machine learning con 5 años como desarrollador full-stack. 
+                        Poseo una sólida capacidad para integrar conocimientos técnicos, visión analítica y experiencia 
+                        práctica en el diseño, implementación y optimización de soluciones de inteligencia artificial.
+                    </p>
+                    <p class="section-text" data-translate="about_text_2">
+                        A lo largo de mi trayectoria, he participado en todas las etapas del ciclo de vida de proyectos de IA: 
+                        análisis exploratorio y preparación de datos, desarrollo y validación de modelos, así como su 
+                        despliegue en entornos productivos. He trabajado con técnicas de machine learning y deep learning 
+                        aplicadas a predicción, clasificación, procesamiento de lenguaje natural y visión artificial.
+                    </p>
+                    <p class="section-text" data-translate="about_text_3">
+                        Apasionado por la investigación y la innovación, me mantengo actualizado en los avances más recientes 
+                        en inteligencia artificial y automatización, buscando siempre aportar soluciones de alto impacto y valor agregado.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-            <!-- Experience Section - Se carga dinámicamente -->
-            <div id="experience-container"></div>
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="exp_title">Experiencia Profesional</h2>
+                <div class="experience-list">
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-info">
+                                <h3 class="job-title" data-translate="1_exp_title">Especialista en Inteligencia Artificial</h3>
+                                <p class="company-name">Subocol S.A.</p>
+                                <p class="job-period" data-translate="1_exp_period">Enero 2022 - Presente</p>
+                            </div>
+                            <div class="experience-location">
+                                <span class="badge bg-primary" data-translate="1_exp_location">Remoto (Bogotá, Colombia)</span>
+                            </div>
+                        </div>
+                        <div class="job-description">
+                            <p data-translate="1_exp_desc_1">• Desarrollo y despliegue de modelos de inteligencia artificial aplicados al sector de seguros de automóviles.</p>
+                            <p data-translate="1_exp_desc_2">• Mejora y mantenimiento de servicios y modelos de AI existentes.</p>
+                            <p data-translate="1_exp_desc_3">• Implementación de servicios web, manejo de bases de datos (SQL y NoSQL).</p>
+                            <p data-translate="1_exp_desc_4">• Análisis estadístico, visualización de datos y desarrollo de ETLs.</p>
+                            <p data-translate="1_exp_desc_5">• Investigación y desarrollo de modelos de IA.</p>
+                            <p data-translate="1_exp_desc_6">• Manejo de servicios en AWS y plataformas para MLOps.</p>
+                        </div>
+                    </div>
 
-            <!-- Education Section - Se carga dinámicamente -->
-            <div id="education-container"></div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-info">
+                                <h3 class="job-title" data-translate="2_exp_title">Ingeniero de Desarrollo Senior</h3>
+                                <p class="company-name">Ipinnovatech Ltda.</p>
+                                <p class="job-period" data-translate="2_exp_period">Mayo 2016 - Febrero 2022</p>
+                            </div>
+                            <div class="experience-location">
+                                <span class="badge bg-primary" data-translate="2_exp_location">Cali, Colombia</span>
+                            </div>
+                        </div>
+                        <div class="job-description">
+                            <p data-translate="2_exp_desc_1">• Diseño e implementación de aplicaciones web (responsive) con integraciones y servicios de terceros.</p>
+                            <p data-translate="2_exp_desc_2">• Visualización de datos y desarrollo de soluciones RETAIL.</p>
+                            <p data-translate="2_exp_desc_3">• Implementación de servicios web y gestión de servidores.</p>
+                            <p data-translate="2_exp_desc_4">• Investigación en inteligencia artificial utilizando redes convolucionales para la detección de objetos en imágenes.</p>
+                            <p data-translate="2_exp_desc_5">• Implementación de algoritmos en visión artificial.</p>
+                            <p data-translate="2_exp_desc_6">• Manejo de bases de datos (SQL y NoSQL).</p>
+                            <p data-translate="2_exp_desc_7">• Manejo de servicios en AWS.</p>
+                        </div>
+                    </div>
 
-            <!-- Skills Section - Se carga dinámicamente -->
-            <div id="skills-container"></div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-info">
+                                <h3 class="job-title" data-translate="3_exp_title">Monitor Asistente de Investigación</h3>
+                                <p class="company-name">Universidad del Valle</p>
+                                <p class="job-period" data-translate="3_exp_period">Febrero 2016 - Marzo 2017</p>
+                            </div>
+                            <div class="experience-location">
+                                <span class="badge bg-primary" data-translate="3_exp_location">Cali, Colombia</span>
+                            </div>
+                        </div>
+                        <div class="job-description">
+                            <p data-translate="3_exp_desc_1">• Implementación de algoritmos de visión artificial.</p>
+                            <p data-translate="3_exp_desc_2">• Desarrollo de rutinas para los movimientos del robot móvil humanoide NAO, utilizando Python.</p>
+                            <p data-translate="3_exp_desc_3">• Trabajo con cámaras stereo para imitación de movimientos humanos.</p>
+                            <p data-translate="3_exp_desc_4">• Colaboración en proyectos de investigación en robótica y visión artificial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Contact Section - Se carga dinámicamente -->
-            <div id="contact-container"></div>
-        </main>
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="edu_title">Formación Académica</h2>
+                <div class="education-list">
+                    <div class="education-item">
+                        <h3 class="degree-title" data-translate="1_edu_degree">Magister en Ingeniería con énfasis en Automática</h3>
+                        <p class="university-name">Universidad del Valle</p>
+                        <p class="degree-period" data-translate="1_edu_period">2018 - 2020</p>
+                        <div class="degree-description">
+                            <p data-translate="1_edu_desc_1">• Promedio de calificaciones: 4.6/5.</p>
+                            <p data-translate="1_edu_desc_2">• Trabajo de investigación: "Pronóstico del índice estandarizado de precipitación (SPI) en la región de Nariño utilizando técnicas de inteligencia artificial".</p>
+                            <p data-translate="1_edu_desc_3">• Temas abordados: Optimización de sistemas dinámicos, optimización de sistemas lineales, control inteligente, visión artificial, técnicas modernas para reconocimiento de patrones, técnicas de pronóstico de series de tiempo.</p>
+                        </div>
+                    </div>
+
+                    <div class="education-item">
+                        <h3 class="degree-title" data-translate="2_edu_degree">Ingeniero Electrónico</h3>
+                        <p class="university-name">Universidad del Valle</p>
+                        <p class="degree-period" data-translate="2_edu_period">2012 - 2017</p>
+                        <div class="degree-description">
+                            <p data-translate="2_edu_desc_1">• Promedio de calificaciones: 4.19/5.</p>
+                            <p data-translate="2_edu_desc_2">• Proyecto de grado: "Desarrollo e implementación de una herramienta para terapias físicas en pacientes con movilidad restringida en miembros superiores".</p>
+                            <p data-translate="2_edu_desc_3">• Temas abordados: Robótica móvil, integración de sistemas para automatización, Controladores Lógicos Programables (PLC), interfaces de usuario, reconocimiento de patrones.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="certifications">
+                    <h3 class="subsection-title" data-translate="certifications">Certificaciones</h3>
+                    <div class="cert-list">
+                        <div class="cert-item">
+                            <div class="cert-info">
+                                <h4 class="cert-title" data-translate="1_cert_title">AWS Certified Cloud Practitioner</h4>
+                                <p class="cert-provider" data-translate="1_cert_provider">Amazon Web Services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courses -->
+                <div class="courses">
+                    <h3 class="subsection-title" data-translate="courses">Cursos</h3>
+                    <div class="course-list">
+                        <div class="course-item">
+                            <h4 class="course-title" data-translate="1_course_title">Machine Learning con Python</h4>
+                            <p class="course-provider" data-translate="1_course_provider">Coursera - Stanford University</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="skills_title">Competencias Técnicas</h2>
+                <div class="skills-grid">
+                    <div class="skills-row">
+                        <div class="skill-category">
+                            <h3 class="subsection-title">Cloud & DevOps</h3>
+                            <div class="skill-items">
+                                <p>Amazon Web Services (AWS)</p>
+                                <p>Infrastructure as Code (IaC)</p>
+                                <p>Despliegue y orquestación</p>
+                                <p>Plataformas de MLOps</p>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3 class="subsection-title">Data Science & ML</h3>
+                            <div class="skill-items">
+                                <p>Análisis estadístico y Visualización de Datos</p>
+                                <p>Feature engineering</p>
+                                <p>Machine Learning avanzado y Deep Learning</p>
+                                <p>Modelos de Clasificación y Regresión</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skills-row">
+                        <div class="skill-category">
+                            <h3 class="subsection-title">Visión Artificial</h3>
+                            <div class="skill-items">
+                                <p>Procesamiento de imágenes y videos (OpenCV)</p>
+                                <p>Modelos de detección y segmentación (YOLO, R-CNN, etc.)</p>
+                                <p>Reconocimiento facial y OCR</p>
+                                <p>Técnicas de segmentación y clasificación</p>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3 class="subsection-title">NLP y Agentes</h3>
+                            <div class="skill-items">
+                                <p>LangChain / LangGraph</p>
+                                <p>N8N para aplicaciones con LLMs</p>
+                                <p>Procesamiento de lenguaje natural</p>
+                                <p>Implementación de Agentes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skills-row">
+                        <div class="skill-category">
+                            <h3 class="subsection-title">Desarrollo Full-Stack</h3>
+                            <div class="skill-items">
+                                <p>Diseño e implementación de aplicaciones web</p>
+                                <p>Integración de sistemas y APIs</p>
+                                <p>Diseño e implementación de arquitectura escalable</p>
+                                <p>Metodologías de desarrollo (CI/CD, TDD, Microservicios)</p>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3 class="subsection-title">Bases de Datos</h3>
+                            <div class="skill-items">
+                                <p>SQL (PostgreSQL, MySQL, Oracle, PL/SQL)</p>
+                                <p>NoSQL (MongoDB, DynamoDB)</p>
+                                <p>Optimización y modelado de bases de datos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="contact_title">¡Trabajemos Juntos!</h2>
+                <p class="section-text" data-translate="contact_text">
+                    ¿Tienes un proyecto en mente? Me encantaría conocer más sobre tu idea y cómo puedo ayudarte a hacerla realidad. No dudes en contactarme.
+                </p>
+                
+                <div class="contact-info">
+                    <h3 class="subsection-title" data-translate="contact_info_title">Información de Contacto</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>cefernal.dev@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Cali, Colombia</span>
+                    </div>
     </div>
 
-    <!-- Scripts -->
+                <div class="contact-actions">
+                    <a href="mailto:cefernal.dev@gmail.com" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        <span data-translate="btn_send_message">Enviar Mensaje</span>
+                    </a>
+                    <a href="pdf/CV - cfernandez ESP 2025.pdf" class="btn btn-secondary" download>
+                        <i class="fas fa-download"></i>
+                        <span data-translate="btn_download_cv">Descargar CV</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript simplificado -->
     <script src="script.js"></script>
 </body>
 </html>

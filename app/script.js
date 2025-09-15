@@ -1,143 +1,13 @@
-// Función para obtener contenido de fallback cuando no se puede cargar una sección
-function getFallbackContent(sectionName) {
-    const fallbackContent = {
-        'header': `
-            <header class="header-section">
-                <div class="container">
-                    <h1>Cristhian Fernández Álvarez</h1>
-                    <p class="subtitle">Especialista en Inteligencia Artificial | Científico de Datos</p>
-                    <p class="location">Cali, Colombia</p>
-                    <div class="contact-info">
-                        <a href="mailto:cefernal.dev@gmail.com">cefernal.dev@gmail.com</a>
-                        <a href="tel:+573122382462">(+57) 312 238 2462</a>
-                    </div>
-                </div>
-            </header>
-        `,
-        'navigation': `
-            <nav class="navigation">
-                <ul>
-                    <li><a href="#about" data-section="about">Sobre Mí</a></li>
-                    <li><a href="#experience" data-section="experience">Experiencia</a></li>
-                    <li><a href="#education" data-section="education">Formación</a></li>
-                    <li><a href="#skills" data-section="skills">Habilidades</a></li>
-                    <li><a href="#contact" data-section="contact">Contacto</a></li>
-                </ul>
-            </nav>
-        `,
-        'about': `
-            <section id="about" class="section">
-                <div class="container">
-                    <h2>Sobre Mí</h2>
-                    <p>Ingeniero especializado en Inteligencia Artificial y Machine Learning.</p>
-                </div>
-            </section>
-        `,
-        'experience': `
-            <section id="experience" class="section">
-                <div class="container">
-                    <h2>Experiencia</h2>
-                    <p>Experiencia profesional en desarrollo de soluciones de IA.</p>
-                </div>
-            </section>
-        `,
-        'education': `
-            <section id="education" class="section">
-                <div class="container">
-                    <h2>Formación</h2>
-                    <p>Formación académica en ingeniería y especialización en IA.</p>
-                </div>
-            </section>
-        `,
-        'skills': `
-            <section id="skills" class="section">
-                <div class="container">
-                    <h2>Habilidades</h2>
-                    <p>Habilidades técnicas en Python, Machine Learning, y desarrollo web.</p>
-                </div>
-            </section>
-        `,
-        'contact': `
-            <section id="contact" class="section">
-                <div class="container">
-                    <h2>Contacto</h2>
-                    <p>Puedes contactarme a través de email o teléfono.</p>
-                </div>
-            </section>
-        `
-    };
-    
-    return fallbackContent[sectionName] || `<div class="section"><div class="container"><p>Contenido no disponible</p></div></div>`;
-}
+// JavaScript simplificado para página plana
+// Funcionalidades: scroll suave, navegación activa y traducciones simples
 
-// Función para cargar secciones dinámicamente
-async function loadSection(sectionName, containerId) {
-    try {
-        // Crear un timeout para evitar que se quede cargando indefinidamente
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
-        
-        // Intentar diferentes rutas para compatibilidad
-        const possiblePaths = [
-            `sections/${sectionName}.html`,
-            `./sections/${sectionName}.html`,
-            `/sections/${sectionName}.html`
-        ];
-        
-        let response;
-        let lastError;
-        
-        for (const path of possiblePaths) {
-            try {
-                response = await fetch(path, { signal: controller.signal });
-                if (response.ok) {
-                    break;
-                }
-            } catch (error) {
-                lastError = error;
-                continue;
-            }
-        }
-        
-        if (!response || !response.ok) {
-            throw lastError || new Error(`No se pudo cargar ${sectionName} desde ninguna ruta`);
-        }
-        
-        clearTimeout(timeoutId);
-        const html = await response.text();
-        document.getElementById(containerId).innerHTML = html;
-    } catch (error) {
-        console.error(`Error loading section ${sectionName}:`, error);
-        // Mostrar contenido de fallback en lugar de error
-        document.getElementById(containerId).innerHTML = getFallbackContent(sectionName);
-    }
-}
-
-// Función para cargar todas las secciones
-async function loadAllSections() {
-    const sections = [
-        { name: 'header', container: 'header-container' },
-        { name: 'navigation', container: 'navigation-container' },
-        { name: 'about', container: 'about-container' },
-        { name: 'experience', container: 'experience-container' },
-        { name: 'education', container: 'education-container' },
-        { name: 'skills', container: 'skills-container' },
-        { name: 'contact', container: 'contact-container' }
-    ];
-
-    // Cargar todas las secciones en paralelo
-    await Promise.all(sections.map(section => 
-        loadSection(section.name, section.container)
-    ));
-}
-
-// Traducciones completas
+// Traducciones
 const TRANSLATIONS = {
     'es': {
         // Navegación
         'nav_about': 'Sobre Mí',
         'nav_experience': 'Experiencia',
-        'nav_education': 'Formación',
+        'nav_education': 'Educación',
         'nav_skills': 'Habilidades',
         'nav_contact': 'Contacto',
         
@@ -145,8 +15,6 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Especialista en Inteligencia Artificial | Científico de Datos | Visión Artificial | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal.dev@gmail.com',
-        'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'CV',
         
         // Sobre Mí
@@ -157,20 +25,18 @@ const TRANSLATIONS = {
         
         // Experiencia
         'exp_title': 'Experiencia Profesional',
-        '1_exp_location': 'Remoto (Bogotá, Colombia)',
         '1_exp_title': 'Especialista en Inteligencia Artificial',
-        '1_exp_company': 'Subocol S.A.',
         '1_exp_period': 'Enero 2022 - Presente',
+        '1_exp_location': 'Remoto (Bogotá, Colombia)',
         '1_exp_desc_1': '• Desarrollo y despliegue de modelos de inteligencia artificial aplicados al sector de seguros de automóviles.',
         '1_exp_desc_2': '• Mejora y mantenimiento de servicios y modelos de AI existentes.',
         '1_exp_desc_3': '• Implementación de servicios web, manejo de bases de datos (SQL y NoSQL).',
         '1_exp_desc_4': '• Análisis estadístico, visualización de datos y desarrollo de ETLs.',
         '1_exp_desc_5': '• Investigación y desarrollo de modelos de IA.',
         '1_exp_desc_6': '• Manejo de servicios en AWS y plataformas para MLOps.',
-        '2_exp_location': 'Cali, Colombia',
         '2_exp_title': 'Ingeniero de Desarrollo Senior',
-        '2_exp_company': 'Ipinnovatech Ltda.',
         '2_exp_period': 'Mayo 2016 - Febrero 2022',
+        '2_exp_location': 'Cali, Colombia',
         '2_exp_desc_1': '• Diseño e implementación de aplicaciones web (responsive) con integraciones y servicios de terceros.',
         '2_exp_desc_2': '• Visualización de datos y desarrollo de soluciones RETAIL.',
         '2_exp_desc_3': '• Implementación de servicios web y gestión de servidores.',
@@ -178,78 +44,42 @@ const TRANSLATIONS = {
         '2_exp_desc_5': '• Implementación de algoritmos en visión artificial.',
         '2_exp_desc_6': '• Manejo de bases de datos (SQL y NoSQL).',
         '2_exp_desc_7': '• Manejo de servicios en AWS.',
-        '3_exp_location': 'Cali, Colombia',
         '3_exp_title': 'Monitor Asistente de Investigación',
-        '3_exp_company': 'Universidad del Valle',
         '3_exp_period': 'Febrero 2016 - Marzo 2017',
+        '3_exp_location': 'Cali, Colombia',
         '3_exp_desc_1': '• Implementación de algoritmos de visión artificial.',
         '3_exp_desc_2': '• Desarrollo de rutinas para los movimientos del robot móvil humanoide NAO, utilizando Python.',
         '3_exp_desc_3': '• Trabajo con cámaras stereo para imitación de movimientos humanos.',
         '3_exp_desc_4': '• Colaboración en proyectos de investigación en robótica y visión artificial.',
         
-        // Formación
+        // Educación
         'edu_title': 'Formación Académica',
         '1_edu_degree': 'Magister en Ingeniería con énfasis en Automática',
-        '1_edu_university': 'Universidad del Valle',
         '1_edu_period': '2018 - 2020',
         '1_edu_desc_1': '• Promedio de calificaciones: 4.6/5.',
         '1_edu_desc_2': '• Trabajo de investigación: "Pronóstico del índice estandarizado de precipitación (SPI) en la región de Nariño utilizando técnicas de inteligencia artificial".',
         '1_edu_desc_3': '• Temas abordados: Optimización de sistemas dinámicos, optimización de sistemas lineales, control inteligente, visión artificial, técnicas modernas para reconocimiento de patrones, técnicas de pronóstico de series de tiempo.',
         '2_edu_degree': 'Ingeniero Electrónico',
-        '2_edu_university': 'Universidad del Valle',
         '2_edu_period': '2012 - 2017',
         '2_edu_desc_1': '• Promedio de calificaciones: 4.19/5.',
         '2_edu_desc_2': '• Proyecto de grado: "Desarrollo e implementación de una herramienta para terapias físicas en pacientes con movilidad restringida en miembros superiores".',
         '2_edu_desc_3': '• Temas abordados: Robótica móvil, integración de sistemas para automatización, Controladores Lógicos Programables (PLC), interfaces de usuario, reconocimiento de patrones.',
-        
-        // Certificaciones
         'certifications': 'Certificaciones',
         '1_cert_title': 'AWS Certified Cloud Practitioner',
         '1_cert_provider': 'Amazon Web Services',
-        
-        // Cursos
         'courses': 'Cursos',
         '1_course_title': 'Machine Learning con Python',
         '1_course_provider': 'Coursera - Stanford University',
         
         // Habilidades
         'skills_title': 'Competencias Técnicas',
-        '1_skill_title': 'Cloud & DevOps',
-        '1_skill_item_1': 'Amazon Web Services (AWS)',
-        '1_skill_item_2': 'Infrastructure as Code (IaC)',
-        '1_skill_item_3': 'Despliegue y orquestación',
-        '1_skill_item_4': 'Plataformas de MLOps',
-        '2_skill_title': 'Data Science & ML',
-        '2_skill_item_1': 'Análisis estadístico y Visualización de Datos',
-        '2_skill_item_2': 'Feature engineering',
-        '2_skill_item_3': 'Machine Learning avanzado y Deep Learning',
-        '2_skill_item_4': 'Modelos de Clasificación y Regresión',
-        '3_skill_title': 'Vision Artificial',
-        '3_skill_item_1': 'Procesamiento de imágenes y videos (OpenCV)',
-        '3_skill_item_2': 'Modelos de detección y segmentación (YOLO, R-CNN, etc.)',
-        '3_skill_item_3': 'Reconocimiento facial y OCR',
-        '3_skill_item_4': 'Tecnicas de segmentación y clasificación',
-        '4_skill_title': 'NLP y Agentes',
-        '4_skill_item_1': 'LangChain / LangGraph',
-        '4_skill_item_2': 'N8N para aplicaciones con LLMs',
-        '4_skill_item_3': 'Procesamiento de lenguaje natural',
-        '4_skill_item_4': 'Implementación de Agentes',
-        '5_skill_title': 'Desarrollo Full-Stack',
-        '5_skill_item_1': 'Diseño e implementación de aplicaciones web',
-        '5_skill_item_2': 'Integración de sistemas y APIs',
-        '5_skill_item_3': 'Diseño e implementación de arquitectura escalable',
-        '5_skill_item_4': 'Metodologías de desarrollo (CI/CD, TDD, Microservicios)',
-        '6_skill_title': 'Bases de Datos',
-        '6_skill_item_1': 'SQL (PostgreSQL, MySQL, Oracle, PL/SQL)',
-        '6_skill_item_2': 'NoSQL (MongoDB, DynamoDB)',
-        '6_skill_item_3': 'Optimización y modelado de bases de datos',
-        '6_skill_item_4': '',
         
         // Contacto
         'contact_title': '¡Trabajemos Juntos!',
         'contact_text': '¿Tienes un proyecto en mente? Me encantaría conocer más sobre tu idea y cómo puedo ayudarte a hacerla realidad. No dudes en contactarme.',
         'contact_info_title': 'Información de Contacto',
         'btn_send_message': 'Enviar Mensaje',
+        'btn_download_cv': 'Descargar CV',
         
         // Selector de idioma
         'language_selector': 'Idioma',
@@ -269,8 +99,6 @@ const TRANSLATIONS = {
         'header_title': 'Cristhian Fernández Álvarez',
         'header_subtitle': 'Artificial Intelligence Specialist | Data Scientist | Computer Vision | AWS Cloud',
         'header_location': 'Cali, Colombia',
-        'header_email': 'cefernal.dev@gmail.com',
-        'header_phone': '(+57) 312 238 2462',
         'btn_cv': 'Resume',
         
         // About Me
@@ -278,23 +106,21 @@ const TRANSLATIONS = {
         'about_text_1': 'Electronic engineer with a master\'s degree in automation and over 10 years of professional experience, combining 5 years in data science and machine learning with 5 years as a full-stack developer. I possess a solid ability to integrate technical knowledge, analytical vision and practical experience in designing, implementing and optimizing artificial intelligence solutions.',
         'about_text_2': 'Throughout my career, I have participated in all stages of the AI project lifecycle: exploratory analysis and data preparation, model development and validation, as well as their deployment in production environments. I have worked with machine learning and deep learning techniques applied to prediction, classification, natural language processing and computer vision.',
         'about_text_3': 'Passionate about research and innovation, I stay updated on the most recent advances in artificial intelligence and automation, always seeking to provide high-impact solutions with added value.',
-
+        
         // Experience
         'exp_title': 'Professional Experience',
-        '1_exp_location': 'Remote (Bogotá, Colombia)',
         '1_exp_title': 'Artificial Intelligence Specialist',
-        '1_exp_company': 'Subocol S.A.',
         '1_exp_period': 'January 2022 - Present',
+        '1_exp_location': 'Remote (Bogotá, Colombia)',
         '1_exp_desc_1': '• Development and deployment of artificial intelligence models applied to the automotive insurance sector.',
         '1_exp_desc_2': '• Improvement and maintenance of existing AI services and models.',
         '1_exp_desc_3': '• Implementation of web services, database management (SQL and NoSQL).',
         '1_exp_desc_4': '• Statistical analysis, data visualization and ETL development.',
         '1_exp_desc_5': '• Research and development of AI models.',
         '1_exp_desc_6': '• AWS services management and MLOps platforms.',
-        '2_exp_location': 'Cali, Colombia',
         '2_exp_title': 'Senior Development Engineer',
-        '2_exp_company': 'Ipinnovatech Ltda.',
         '2_exp_period': 'May 2016 - February 2022',
+        '2_exp_location': 'Cali, Colombia',
         '2_exp_desc_1': '• Design and implementation of responsive web applications with integrations and third-party services.',
         '2_exp_desc_2': '• Data visualization and RETAIL solutions development.',
         '2_exp_desc_3': '• Web services implementation and server management.',
@@ -302,10 +128,9 @@ const TRANSLATIONS = {
         '2_exp_desc_5': '• Implementation of computer vision algorithms.',
         '2_exp_desc_6': '• Database management (SQL and NoSQL).',
         '2_exp_desc_7': '• AWS services management.',
-        '3_exp_location': 'Cali, Colombia',
         '3_exp_title': 'Research Assistant Monitor',
-        '3_exp_company': 'University of Valle',
         '3_exp_period': 'February 2016 - March 2017',
+        '3_exp_location': 'Cali, Colombia',
         '3_exp_desc_1': '• Implementation of computer vision algorithms.',
         '3_exp_desc_2': '• Development of routines for NAO humanoid mobile robot movements using Python.',
         '3_exp_desc_3': '• Work with stereo cameras for human movement imitation.',
@@ -314,66 +139,31 @@ const TRANSLATIONS = {
         // Education
         'edu_title': 'Education',
         '1_edu_degree': 'Master\'s in Engineering with emphasis in Automation',
-        '1_edu_university': 'University of Valle',
         '1_edu_period': '2018 - 2020',
         '1_edu_desc_1': '• Grade point average: 4.6/5',
         '1_edu_desc_2': '• Research project: "Forecast of the Standardized Precipitation Index (SPI) in the Nariño region using artificial intelligence techniques"',
         '1_edu_desc_3': '• Topics covered: Dynamic systems optimization, linear systems optimization, intelligent control, computer vision, modern techniques for pattern recognition, time series forecasting techniques',
         '2_edu_degree': 'Electronic Engineer',
-        '2_edu_university': 'University of Valle',
         '2_edu_period': '2012 - 2017',
         '2_edu_desc_1': '• Grade point average: 4.19/5',
         '2_edu_desc_2': '• Final project: "Development and implementation of a tool for physical therapies in patients with restricted upper limb mobility"',
         '2_edu_desc_3': '• Topics covered: Mobile robotics, integration of systems for automation, Programmable Logic Controllers (PLC), user interfaces, pattern recognition',
-        
-        // Certifications
         'certifications': 'Certifications',
         '1_cert_title': 'AWS Certified Cloud Practitioner',
         '1_cert_provider': 'Amazon Web Services',
-        
-        // Courses
         'courses': 'Courses',
         '1_course_title': 'Machine Learning with Python',
         '1_course_provider': 'Coursera - Stanford University',
         
         // Skills
         'skills_title': 'Technical Skills',
-        '1_skill_title': 'Cloud & DevOps',
-        '1_skill_item_1': 'Amazon Web Services (AWS)',
-        '1_skill_item_2': 'Infrastructure as Code (IaC)',
-        '1_skill_item_3': 'Deployment and orchestration',
-        '1_skill_item_4': 'MLOps platforms',
-        '2_skill_title': 'Data Science & ML',
-        '2_skill_item_1': 'Statistical analysis and Data Visualization',
-        '2_skill_item_2': 'Feature engineering',
-        '2_skill_item_3': 'Advanced Machine Learning and Deep Learning',
-        '2_skill_item_4': 'Classification and Regression Models',
-        '3_skill_title': 'Computer Vision',
-        '3_skill_item_1': 'Image and video processing (OpenCV)',
-        '3_skill_item_2': 'Detection and segmentation models (YOLO, R-CNN, etc.)',
-        '3_skill_item_3': 'Facial recognition and OCR',
-        '3_skill_item_4': 'Segmentation and classification techniques',
-        '4_skill_title': 'NLP & Agents',
-        '4_skill_item_1': 'LangChain / LangGraph',
-        '4_skill_item_2': 'N8N for LLM applications',
-        '4_skill_item_3': 'Natural language processing',
-        '4_skill_item_4': 'Agent implementation',
-        '5_skill_title': 'Full-Stack Development',
-        '5_skill_item_1': 'Web application design and implementation',
-        '5_skill_item_2': 'System and API integration',
-        '5_skill_item_3': 'Scalable architecture design and implementation',
-        '5_skill_item_4': 'Development methodologies (CI/CD, TDD, Microservices)',
-        '6_skill_title': 'Databases',
-        '6_skill_item_1': 'SQL (PostgreSQL, MySQL, Oracle, PL/SQL)',
-        '6_skill_item_2': 'NoSQL (MongoDB, DynamoDB)',
-        '6_skill_item_3': 'Database optimization and modeling',
-        '6_skill_item_4': '',
         
         // Contact
         'contact_title': "Let's Work Together!",
         'contact_text': 'Do you have a project in mind? I would love to learn more about your idea and how I can help you make it a reality. Feel free to contact me.',
         'contact_info_title': 'Contact Information',
         'btn_send_message': 'Send Message',
+        'btn_download_cv': 'Download CV',
         
         // Language selector
         'language_selector': 'Language',
@@ -384,7 +174,6 @@ const TRANSLATIONS = {
 
 // Estado de la aplicación
 let currentLanguage = 'es';
-let currentSection = 'about';
 
 // Función para obtener traducción
 function getTranslation(key, language = currentLanguage) {
@@ -411,151 +200,19 @@ function changeLanguage(language) {
     currentLanguage = language;
     updateTranslations(language);
     localStorage.setItem('portfolio-language', language);
-}
-
-// Función para mostrar sección
-function showSection(sectionId) {
-    // Ocultar todas las secciones
-    const sections = document.querySelectorAll('.section-content');
-    sections.forEach(section => {
-        section.classList.remove('active');
-    });
     
-    // Mostrar la sección seleccionada
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) {
-        targetSection.classList.add('active');
-        currentSection = sectionId;
-    }
-    
-    // Actualizar navegación
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === sectionId) {
-            link.classList.add('active');
-        }
-    });
-    
-    // Actualizar URL sin recargar la página
-    const url = new URL(window.location);
-    url.hash = sectionId;
-    window.history.pushState({}, '', url);
-}
-
-// Función para manejar descarga de CV
-function downloadCV() {
-    // URLs de los CVs locales según el idioma
-    const cvUrls = {
-        'es': 'pdf/CV - cfernandez ESP 2025.pdf',
-        'en': 'pdf/CV - cfernandez ENG 2025.pdf'
-    };
-    
-    // Obtener la URL del CV según el idioma actual
-    const cvUrl = cvUrls[currentLanguage] || cvUrls['es'];
-    
-    // Crear un enlace temporal para descargar el archivo
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = `Cristhian_Fernandez_CV_${currentLanguage.toUpperCase()}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-
-// Función para manejar el scroll suave
-function handleSmoothScroll() {
-    const navLinks = document.querySelectorAll('.nav-link[data-section]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
-            showSection(sectionId);
-        });
-    });
-}
-
-// Función para manejar el hash de la URL
-function handleUrlHash() {
-    const hash = window.location.hash.substring(1);
-    if (hash && document.getElementById(hash)) {
-        showSection(hash);
+    // Cambiar el CV según el idioma
+    const cvLink = document.querySelector('a[href*="CV"]');
+    if (cvLink) {
+        const cvUrls = {
+            'es': 'pdf/CV - cfernandez ESP 2025.pdf',
+            'en': 'pdf/CV - cfernandez ENG 2025.pdf'
+        };
+        cvLink.href = cvUrls[language] || cvUrls['es'];
     }
 }
 
-// Función para detectar si se está accediendo desde Instagram
-function isInstagramBrowser() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return userAgent.includes('instagram') || 
-           userAgent.includes('fbav') || 
-           userAgent.includes('fban') ||
-           window.location.href.includes('l.instagram.com');
-}
-
-// Función para redirigir a la versión optimizada para Instagram
-function redirectToInstagramVersion() {
-    if (isInstagramBrowser()) {
-        const currentUrl = window.location.href;
-        const baseUrl = currentUrl.split('?')[0].replace(/\/$/, '');
-        const instagramUrl = baseUrl + '/instagram.html';
-        
-        // Agregar parámetros de la URL original si existen
-        const urlParams = window.location.search;
-        if (urlParams) {
-            window.location.href = instagramUrl + urlParams;
-        } else {
-            window.location.href = instagramUrl;
-        }
-        return true;
-    }
-    return false;
-}
-
-// Función para inicializar la aplicación
-async function initializeApp() {
-    // Verificar si es Instagram y redirigir
-    if (redirectToInstagramVersion()) {
-        return;
-    }
-    
-    try {
-        // Crear un timeout global para evitar que se quede cargando indefinidamente
-        const globalTimeout = setTimeout(() => {
-            console.warn('Timeout: Forzando finalización de carga');
-            finishLoading();
-        }, 10000); // 10 segundos máximo
-        
-        // Cargar todas las secciones dinámicamente
-        await loadAllSections();
-        
-        // Limpiar timeout si todo carga correctamente
-        clearTimeout(globalTimeout);
-        
-        // Finalizar carga
-        finishLoading();
-        
-    } catch (error) {
-        console.error('Error durante la inicialización:', error);
-        // Aún así, finalizar la carga para mostrar lo que se pueda
-        finishLoading();
-    }
-}
-
-// Función para finalizar la carga
-function finishLoading() {
-    // Ocultar loading indicator
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-    }
-    
-    // Mostrar contenido principal
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.style.display = 'block';
-    }
-    
+document.addEventListener('DOMContentLoaded', function() {
     // Cargar idioma guardado
     const savedLanguage = localStorage.getItem('portfolio-language');
     if (savedLanguage && TRANSLATIONS[savedLanguage]) {
@@ -569,55 +226,59 @@ function finishLoading() {
     // Actualizar traducciones
     updateTranslations(currentLanguage);
     
-    // Configurar eventos
-    setupEventListeners();
-    
-    // Manejar hash de URL
-    handleUrlHash();
-    
-    // Configurar scroll suave
-    handleSmoothScroll();
-    
-}
-
-// Función para configurar event listeners
-function setupEventListeners() {
-    // Selector de idioma
+    // Configurar selector de idioma
     const languageSelector = document.getElementById('language-selector');
     if (languageSelector) {
         languageSelector.addEventListener('change', (e) => {
             changeLanguage(e.target.value);
         });
     }
+
+    // Smooth scrolling para enlaces de navegación
+    const navLinks = document.querySelectorAll('a[href^="#"]');
     
-    // Botón de descarga de CV
-    const cvButton = document.getElementById('btn-cv-download');
-    if (cvButton) {
-        cvButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            downloadCV();
-        });
-    }
-    
-    // Navegación
-    const navLinks = document.querySelectorAll('.nav-link[data-section]');
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
-            showSection(sectionId);
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
     });
-    
-    // Manejar cambios en el hash de la URL
-    window.addEventListener('hashchange', handleUrlHash);
-}
 
+    // Resaltar enlace de navegación activo basado en scroll
+    function updateActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        let currentSection = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            const scrollPosition = window.scrollY + 100; // Offset para activar antes
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('id');
+            }
+        });
 
-// Inicializar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-} else {
-    initializeApp();
-}
+        // Actualizar enlaces de navegación
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + currentSection) {
+                link.classList.add('active');
+            }
+        });
+    }
 
+    // Ejecutar al cargar y al hacer scroll
+    window.addEventListener('scroll', updateActiveNavLink);
+    updateActiveNavLink(); // Ejecutar al cargar la página
+});
