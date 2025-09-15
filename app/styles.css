@@ -662,14 +662,7 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Mejoras para navegadores internos de redes sociales */
-.instagram-fallback {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Eliminados estilos específicos para navegadores internos de redes sociales */
 
 /* Estilos para navegadores sin JavaScript */
 noscript {
@@ -685,10 +678,6 @@ noscript div {
 
 /* Mejoras de compatibilidad para navegadores móviles */
 @media (max-width: 768px) {
-    .instagram-fallback {
-        padding: 1rem;
-    }
-    
     noscript div {
         margin: 1rem;
         padding: 1.5rem;

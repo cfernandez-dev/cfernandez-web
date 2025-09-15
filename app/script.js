@@ -354,15 +354,9 @@ function downloadCV() {
     window.open(cvUrl, '_blank');
 }
 
-// Función para detectar navegadores problemáticos
+// Eliminada validación de navegadores problemáticos (Instagram, etc.)
 function isProblematicBrowser() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const problematicBrowsers = [
-        'instagram', 'fbav', 'fban', 'fbios', 'twitter', 
-        'tiktok', 'snapchat', 'whatsapp', 'telegram', 'line'
-    ];
-    
-    return problematicBrowsers.some(browser => userAgent.includes(browser));
+    return false;
 }
 
 // Función para mostrar mensaje de compatibilidad
@@ -492,12 +486,7 @@ async function initializeApp() {
     // Configurar scroll suave
     handleSmoothScroll();
     
-    // Detectar navegadores problemáticos
-    if (isProblematicBrowser()) {
-        setTimeout(() => {
-            showCompatibilityMessage();
-        }, 2000);
-    }
+    // Compatibilidad especial deshabilitada
 }
 
 // Función para configurar event listeners
@@ -533,48 +522,18 @@ function setupEventListeners() {
     window.addEventListener('hashchange', handleUrlHash);
 }
 
-// Función para mejorar la compatibilidad con Instagram
-function enhanceInstagramCompatibility() {
-    if (isProblematicBrowser()) {
-        // Agregar estilos adicionales para Instagram
-        const style = document.createElement('style');
-        style.textContent = `
-            body {
-                -webkit-overflow-scrolling: touch;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-            }
-            
-            .app-container {
-                -webkit-overflow-scrolling: touch;
-                overflow-x: hidden;
-            }
-            
-            * {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
+// Eliminada función de compatibilidad específica de Instagram
+function enhanceInstagramCompatibility() {}
 
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        enhanceInstagramCompatibility();
         initializeApp();
     });
 } else {
-    enhanceInstagramCompatibility();
     initializeApp();
 }
 
 // También verificar cuando la ventana se carga completamente
-window.addEventListener('load', () => {
-    if (isProblematicBrowser()) {
-        setTimeout(() => {
-            showCompatibilityMessage();
-        }, 1000);
-    }
-});
+// Compatibilidad especial deshabilitada en evento load
+window.addEventListener('load', () => {});
