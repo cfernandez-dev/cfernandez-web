@@ -575,7 +575,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .main-container {
-        padding: 1rem 0.5rem;
+        padding: 1rem 1rem;
     }
     
     .hero-title {
@@ -598,7 +598,7 @@ body {
     }
     
     .section-content {
-        padding: 0 0.5rem;
+        padding: 0 1rem;
     }
     
     .experience-item {
@@ -627,6 +627,13 @@ body {
 }
 
 @media (max-width: 480px) {
+    .main-container {
+        padding: 1rem 1rem;
+    }
+    
+    .section-content {
+        padding: 0 1.25rem;
+    }
     .hero-title {
         font-size: 2rem;
     }
