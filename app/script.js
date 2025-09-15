@@ -1,20 +1,7 @@
-// Función para cargar secciones dinámicamente con timeout extendido
+// Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        // Timeout más largo para conexiones lentas (30 segundos)
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000);
-        
-        const response = await fetch(`sections/${sectionName}.html`, {
-            signal: controller.signal,
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
-            }
-        });
-        
-        clearTimeout(timeoutId);
-        
+        const response = await fetch(`sections/${sectionName}.html`);
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
@@ -22,49 +9,12 @@ async function loadSection(sectionName, containerId) {
         document.getElementById(containerId).innerHTML = html;
     } catch (error) {
         console.error(`Error loading section ${sectionName}:`, error);
-        
-        // Mensaje más específico para errores de conexión
-        let errorMessage = `<p>Error cargando la sección ${sectionName}</p>`;
-        
-        if (error.name === 'AbortError') {
-            errorMessage = `
-                <div class="connection-error">
-                    <h3>Error de conexión</h3>
-                    <p>La conexión está tardando demasiado. Por favor:</p>
-                    <ul>
-                        <li>Verifica tu conexión a internet</li>
-                        <li>Intenta recargar la página</li>
-                        <li>Abre este enlace en tu navegador principal</li>
-                    </ul>
-                    <a href="${window.location.href}" target="_blank" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt"></i> Abrir en navegador
-                    </a>
-                </div>
-            `;
-        }
-        
-        document.getElementById(containerId).innerHTML = errorMessage;
+        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
     }
-}
-
-
-// Función para detectar si estamos en un webview de Instagram
-function isInstagramWebview() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return userAgent.includes('instagram') || 
-           userAgent.includes('fbav') || 
-           userAgent.includes('fban') ||
-           userAgent.includes('fbsv');
 }
 
 // Función para cargar todas las secciones
 async function loadAllSections() {
-    // Si estamos en Instagram webview, mantener el contenido inmediato visible
-    if (isInstagramWebview()) {
-        console.log('Instagram webview detectado, manteniendo contenido estático');
-        return;
-    }
-
     const sections = [
         { name: 'header', container: 'header-container' },
         { name: 'navigation', container: 'navigation-container' },
@@ -80,7 +30,6 @@ async function loadAllSections() {
         loadSection(section.name, section.container)
     ));
 }
-
 
 // Traducciones completas
 const TRANSLATIONS = {
@@ -333,11 +282,9 @@ const TRANSLATIONS = {
     }
 };
 
-
 // Estado de la aplicación
 let currentLanguage = 'es';
 let currentSection = 'about';
-
 
 // Función para obtener traducción
 function getTranslation(key, language = currentLanguage) {
@@ -359,14 +306,12 @@ function updateTranslations(language) {
     });
 }
 
-
 // Función para cambiar idioma
 function changeLanguage(language) {
     currentLanguage = language;
     updateTranslations(language);
     localStorage.setItem('portfolio-language', language);
 }
-
 
 // Función para mostrar sección
 function showSection(sectionId) {
@@ -397,7 +342,6 @@ function showSection(sectionId) {
     url.hash = sectionId;
     window.history.pushState({}, '', url);
 }
-
 
 // Función para manejar descarga de CV
 function downloadCV() {
@@ -432,7 +376,6 @@ function handleSmoothScroll() {
     });
 }
 
-
 // Función para manejar el hash de la URL
 function handleUrlHash() {
     const hash = window.location.hash.substring(1);
@@ -441,45 +384,8 @@ function handleUrlHash() {
     }
 }
 
-
-// Función para configurar navegación básica para webviews
-function setupBasicNavigation() {
-    const navLinks = document.querySelectorAll('#immediate-nav .nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const sectionId = link.getAttribute('href').substring(1);
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-}
-
 // Función para inicializar la aplicación
 async function initializeApp() {
-    // Si estamos en Instagram webview, mostrar contenido inmediatamente
-    if (isInstagramWebview()) {
-        console.log('Instagram webview detectado, mostrando contenido estático');
-        
-        // Ocultar loading indicator inmediatamente
-        const loadingIndicator = document.getElementById('loading-indicator');
-        if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-        }
-        
-        // Mostrar contenido principal
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.display = 'block';
-        }
-        
-        // Configurar navegación básica para webview
-        setupBasicNavigation();
-        return;
-    }
-    
     // Cargar todas las secciones dinámicamente
     await loadAllSections();
     
@@ -518,7 +424,6 @@ async function initializeApp() {
     handleSmoothScroll();
     
 }
-
 
 // Función para configurar event listeners
 function setupEventListeners() {

@@ -175,5 +175,3 @@ MIT License - Puedes usar este código libremente.
 **Email:** cefernal.dev@gmail.com  
 **LinkedIn:** [cristhian-fernandez95](https://linkedin.com/in/cristhian-fernandez95)  
 **GitHub:** [cfernandez-dev](https://github.com/cfernandez-dev)
-
-
