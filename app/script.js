@@ -1,22 +1,28 @@
 // Sistema de traducciones y funcionalidades del portfolio
 // Migrado desde el proyecto Dash original
 
-// Función para cargar secciones dinámicamente
+// Función para cargar secciones dinámicamente (no bloqueante y con fallback)
 async function loadSection(sectionName, containerId) {
+    const container = document.getElementById(containerId);
+    if (container && !container.innerHTML) {
+        container.innerHTML = '<div class="text-muted">Cargando…</div>';
+    }
     try {
         const response = await fetch(`./sections/${sectionName}.html`);
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
         const html = await response.text();
-        document.getElementById(containerId).innerHTML = html;
+        if (container) container.innerHTML = html;
     } catch (error) {
         console.error(`Error loading section ${sectionName}:`, error);
-        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
+        if (container && !container.innerHTML) {
+            container.innerHTML = `<p class="text-muted">No se pudo cargar ${sectionName}. Intenta recargar.</p>`;
+        }
     }
 }
 
-// Función para cargar todas las secciones
+// Función para cargar todas las secciones (sin bloquear la UI)
 async function loadAllSections() {
     const sections = [
         { name: 'header', container: 'header-container' },
@@ -28,10 +34,14 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
-    // Cargar todas las secciones en paralelo
-    await Promise.all(sections.map(section => 
-        loadSection(section.name, section.container)
-    ));
+    const results = await Promise.allSettled(
+        sections.map(section => loadSection(section.name, section.container))
+    );
+    results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+            console.warn('Sección no cargada:', sections[i].name, r.reason);
+        }
+    });
 }
 
 // Traducciones completas
@@ -379,20 +389,15 @@ function handleUrlHash() {
 
 // Función para inicializar la aplicación
 async function initializeApp() {
-    // Cargar todas las secciones dinámicamente
-    await loadAllSections();
-    
-    // Ocultar loading indicator
+    // Comenzar la carga de secciones sin bloquear
+    loadAllSections();
+
+    // Ocultar loading indicator y mostrar contenido de inmediato
     const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-    }
-    
-    // Mostrar contenido principal
+    if (loadingIndicator) loadingIndicator.style.display = 'none';
+
     const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.style.display = 'block';
-    }
+    if (mainContent) mainContent.style.display = 'block';
     
     // Cargar idioma guardado
     const savedLanguage = localStorage.getItem('portfolio-language');
