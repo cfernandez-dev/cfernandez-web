@@ -484,8 +484,41 @@ function handleUrlHash() {
     }
 }
 
+// Función para detectar si se está accediendo desde Instagram
+function isInstagramBrowser() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.includes('instagram') || 
+           userAgent.includes('fbav') || 
+           userAgent.includes('fban') ||
+           window.location.href.includes('l.instagram.com');
+}
+
+// Función para redirigir a la versión optimizada para Instagram
+function redirectToInstagramVersion() {
+    if (isInstagramBrowser()) {
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.split('?')[0].replace(/\/$/, '');
+        const instagramUrl = baseUrl + '/instagram.html';
+        
+        // Agregar parámetros de la URL original si existen
+        const urlParams = window.location.search;
+        if (urlParams) {
+            window.location.href = instagramUrl + urlParams;
+        } else {
+            window.location.href = instagramUrl;
+        }
+        return true;
+    }
+    return false;
+}
+
 // Función para inicializar la aplicación
 async function initializeApp() {
+    // Verificar si es Instagram y redirigir
+    if (redirectToInstagramVersion()) {
+        return;
+    }
+    
     try {
         // Crear un timeout global para evitar que se quede cargando indefinidamente
         const globalTimeout = setTimeout(() => {
