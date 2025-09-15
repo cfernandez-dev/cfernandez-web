@@ -1,54 +1,39 @@
 {
   "version": 2,
-  "name": "cristhian-fernandez-portfolio",
   "builds": [
     {
-      "src": "index.html",
+      "src": "**/*",
       "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "sections/**/*.html",
       "headers": [
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         },
         {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, HEAD, OPTIONS"
         },
         {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Accept"
         },
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
+          "value": "public, max-age=3600"
         },
         {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
         }
       ]
     },
     {
-      "source": "/styles.css",
+      "source": "**/*.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -57,7 +42,7 @@
       ]
     },
     {
-      "source": "/script.js",
+      "source": "**/*.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -66,9 +51,10 @@
       ]
     }
   ],
-  "functions": {
-    "app/api/contact.js": {
-      "maxDuration": 10
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  }
+  ]
 }

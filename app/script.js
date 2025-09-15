@@ -4,15 +4,38 @@
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`sections/${sectionName}.html`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+        
+        // Usar ruta absoluta para evitar problemas de CORS
+        const baseUrl = window.location.origin;
+        const response = await fetch(`${baseUrl}/sections/${sectionName}.html`, {
+            signal: controller.signal,
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default',
+            headers: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.9'
+            }
+        });
+        
+        clearTimeout(timeoutId);
+        
         if (!response.ok) {
-            throw new Error(`Error loading ${sectionName}: ${response.status}`);
+            throw new Error(`HTTP ${response.status} - ${response.statusText}`);
         }
+        
         const html = await response.text();
-        document.getElementById(containerId).innerHTML = html;
+        if (html && html.trim()) {
+            document.getElementById(containerId).innerHTML = html;
+        } else {
+            console.warn(`Respuesta vacía para ${sectionName}`);
+            document.getElementById(containerId).innerHTML = '';
+        }
+        
     } catch (error) {
-        console.error(`Error loading section ${sectionName}:`, error);
-        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
+        console.error(`Error cargando ${sectionName}:`, error.message);
+        document.getElementById(containerId).innerHTML = '';
     }
 }
 
@@ -28,10 +51,13 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
+    console.log('🚀 Cargando secciones...');
+    console.log('📍 URL:', window.location.origin);
+
     // Cargar todas las secciones en paralelo
-    await Promise.all(sections.map(section => 
-        loadSection(section.name, section.container)
-    ));
+    await Promise.allSettled(
+        sections.map(section => loadSection(section.name, section.container))
+    );
 }
 
 // Traducciones completas
@@ -453,50 +479,114 @@ function handleUrlHash() {
     }
 }
 
-// Función para inicializar la aplicación
-async function initializeApp() {
-    // Cargar todas las secciones dinámicamente
-    await loadAllSections();
+// Función para verificar conexión
+function checkConnection() {
+    return navigator.onLine;
+}
+
+// Función para mostrar indicador de conexión
+function showConnectionStatus() {
+    const status = document.createElement('div');
+    status.id = 'connection-status';
+    status.style.cssText = `
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 1000;
+        transition: all 0.3s ease;
+    `;
     
-    // Ocultar loading indicator
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-    }
-    
-    // Mostrar contenido principal
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.style.display = 'block';
-    }
-    
-    // Cargar idioma guardado
-    const savedLanguage = localStorage.getItem('portfolio-language');
-    if (savedLanguage && TRANSLATIONS[savedLanguage]) {
-        currentLanguage = savedLanguage;
-        const languageSelector = document.getElementById('language-selector');
-        if (languageSelector) {
-            languageSelector.value = savedLanguage;
+    function updateStatus() {
+        if (navigator.onLine) {
+            status.textContent = '✓ Conectado';
+            status.style.backgroundColor = '#10b981';
+            status.style.color = 'white';
+        } else {
+            status.textContent = '⚠ Sin conexión';
+            status.style.backgroundColor = '#ef4444';
+            status.style.color = 'white';
         }
     }
     
-    // Actualizar traducciones
-    updateTranslations(currentLanguage);
+    updateStatus();
+    document.body.appendChild(status);
     
-    // Configurar eventos
-    setupEventListeners();
-    
-    // Manejar hash de URL
-    handleUrlHash();
-    
-    // Configurar scroll suave
-    handleSmoothScroll();
-    
-    // Detectar navegadores problemáticos
-    if (isProblematicBrowser()) {
-        setTimeout(() => {
-            showCompatibilityMessage();
-        }, 2000);
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+}
+
+// Función para inicializar la aplicación
+async function initializeApp() {
+    try {
+        // Mostrar estado de conexión
+        showConnectionStatus();
+        
+        // Verificar conexión antes de cargar
+        if (!checkConnection()) {
+            console.warn('Sin conexión, usando cache local');
+        }
+        
+        // Mostrar contenido principal INMEDIATAMENTE
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
+        
+        // Ocultar loading indicator
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+        
+        // Cargar todas las secciones dinámicamente (no bloquea la UI)
+        loadAllSections().catch(error => {
+            console.error('Error cargando secciones:', error);
+            // La página ya está visible, solo logueamos el error
+        });
+        
+        // Cargar idioma guardado
+        const savedLanguage = localStorage.getItem('portfolio-language');
+        if (savedLanguage && TRANSLATIONS[savedLanguage]) {
+            currentLanguage = savedLanguage;
+            const languageSelector = document.getElementById('language-selector');
+            if (languageSelector) {
+                languageSelector.value = savedLanguage;
+            }
+        }
+        
+        // Actualizar traducciones
+        updateTranslations(currentLanguage);
+        
+        // Configurar eventos
+        setupEventListeners();
+        
+        // Manejar hash de URL
+        handleUrlHash();
+        
+        // Configurar scroll suave
+        handleSmoothScroll();
+        
+        // Detectar navegadores problemáticos
+        if (isProblematicBrowser()) {
+            setTimeout(() => {
+                showCompatibilityMessage();
+            }, 2000);
+        }
+        
+    } catch (error) {
+        console.error('Error en inicialización:', error);
+        // Asegurar que la página se muestre aunque haya errores
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
     }
 }
 
@@ -556,6 +646,19 @@ function enhanceInstagramCompatibility() {
             }
         `;
         document.head.appendChild(style);
+    }
+}
+
+// Función de seguridad para mostrar la página
+function forceShowPage() {
+    const mainContent = document.getElementById('main-content');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    
+    if (mainContent) {
+        mainContent.style.display = 'block';
+    }
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
     }
 }
 
