@@ -77,15 +77,33 @@ async function loadSection(sectionName, containerId) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
         
-        const response = await fetch(`sections/${sectionName}.html`, {
-            signal: controller.signal
-        });
+        // Intentar diferentes rutas para compatibilidad
+        const possiblePaths = [
+            `sections/${sectionName}.html`,
+            `./sections/${sectionName}.html`,
+            `/sections/${sectionName}.html`
+        ];
+        
+        let response;
+        let lastError;
+        
+        for (const path of possiblePaths) {
+            try {
+                response = await fetch(path, { signal: controller.signal });
+                if (response.ok) {
+                    break;
+                }
+            } catch (error) {
+                lastError = error;
+                continue;
+            }
+        }
+        
+        if (!response || !response.ok) {
+            throw lastError || new Error(`No se pudo cargar ${sectionName} desde ninguna ruta`);
+        }
         
         clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            throw new Error(`Error loading ${sectionName}: ${response.status}`);
-        }
         const html = await response.text();
         document.getElementById(containerId).innerHTML = html;
     } catch (error) {
