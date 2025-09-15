@@ -830,6 +830,39 @@ noscript div {
     box-shadow: var(--shadow);
 }
 
+/* Estilos para errores de conexión */
+.connection-error {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin: 1rem 0;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.connection-error h3 {
+    color: #856404;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.connection-error p {
+    color: #856404;
+    margin-bottom: 1rem;
+}
+
+.connection-error ul {
+    text-align: left;
+    color: #856404;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.connection-error li {
+    margin-bottom: 0.5rem;
+}
+
 .section-fallback h2 {
     color: var(--text-primary);
     margin-bottom: 1rem;

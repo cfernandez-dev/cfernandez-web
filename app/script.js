@@ -1,7 +1,20 @@
-// Función para cargar secciones dinámicamente
+// Función para cargar secciones dinámicamente con timeout extendido
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`sections/${sectionName}.html`);
+        // Timeout más largo para conexiones lentas (30 segundos)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
+        
+        const response = await fetch(`sections/${sectionName}.html`, {
+            signal: controller.signal,
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
+        
+        clearTimeout(timeoutId);
+        
         if (!response.ok) {
             throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
@@ -9,9 +22,31 @@ async function loadSection(sectionName, containerId) {
         document.getElementById(containerId).innerHTML = html;
     } catch (error) {
         console.error(`Error loading section ${sectionName}:`, error);
-        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
+        
+        // Mensaje más específico para errores de conexión
+        let errorMessage = `<p>Error cargando la sección ${sectionName}</p>`;
+        
+        if (error.name === 'AbortError') {
+            errorMessage = `
+                <div class="connection-error">
+                    <h3>Error de conexión</h3>
+                    <p>La conexión está tardando demasiado. Por favor:</p>
+                    <ul>
+                        <li>Verifica tu conexión a internet</li>
+                        <li>Intenta recargar la página</li>
+                        <li>Abre este enlace en tu navegador principal</li>
+                    </ul>
+                    <a href="${window.location.href}" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Abrir en navegador
+                    </a>
+                </div>
+            `;
+        }
+        
+        document.getElementById(containerId).innerHTML = errorMessage;
     }
 }
+
 
 // Función para cargar todas las secciones
 async function loadAllSections() {
@@ -30,6 +65,7 @@ async function loadAllSections() {
         loadSection(section.name, section.container)
     ));
 }
+
 
 // Traducciones completas
 const TRANSLATIONS = {
@@ -282,9 +318,11 @@ const TRANSLATIONS = {
     }
 };
 
+
 // Estado de la aplicación
 let currentLanguage = 'es';
 let currentSection = 'about';
+
 
 // Función para obtener traducción
 function getTranslation(key, language = currentLanguage) {
@@ -306,12 +344,14 @@ function updateTranslations(language) {
     });
 }
 
+
 // Función para cambiar idioma
 function changeLanguage(language) {
     currentLanguage = language;
     updateTranslations(language);
     localStorage.setItem('portfolio-language', language);
 }
+
 
 // Función para mostrar sección
 function showSection(sectionId) {
@@ -342,6 +382,7 @@ function showSection(sectionId) {
     url.hash = sectionId;
     window.history.pushState({}, '', url);
 }
+
 
 // Función para manejar descarga de CV
 function downloadCV() {
@@ -376,6 +417,7 @@ function handleSmoothScroll() {
     });
 }
 
+
 // Función para manejar el hash de la URL
 function handleUrlHash() {
     const hash = window.location.hash.substring(1);
@@ -383,6 +425,7 @@ function handleUrlHash() {
         showSection(hash);
     }
 }
+
 
 // Función para inicializar la aplicación
 async function initializeApp() {
@@ -424,6 +467,7 @@ async function initializeApp() {
     handleSmoothScroll();
     
 }
+
 
 // Función para configurar event listeners
 function setupEventListeners() {
