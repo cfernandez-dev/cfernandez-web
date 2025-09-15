@@ -14,7 +14,7 @@
     --border-radius: 8px;
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Reset y estilos base */
@@ -662,6 +662,14 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Mejoras para navegadores internos de redes sociales */
+.instagram-fallback {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* Estilos para navegadores sin JavaScript */
 noscript {
@@ -677,6 +685,9 @@ noscript div {
 
 /* Mejoras de compatibilidad para navegadores móviles */
 @media (max-width: 768px) {
+    .instagram-fallback {
+        padding: 1rem;
+    }
     
     noscript div {
         margin: 1rem;

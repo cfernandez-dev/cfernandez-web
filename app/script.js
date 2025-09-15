@@ -1,26 +1,18 @@
-// Sistema de traducciones y funcionalidades del portfolio - Versión estática
-// Carga secciones desde archivos HTML estáticos
+// Sistema de traducciones y funcionalidades del portfolio
+// Migrado desde el proyecto Dash original
 
-// Función para cargar secciones de forma estática
+// Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) {
     try {
-        const response = await fetch(`./sections/${sectionName}.html`);
-        
+        const response = await fetch(`sections/${sectionName}.html`);
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+            throw new Error(`Error loading ${sectionName}: ${response.status}`);
         }
-        
         const html = await response.text();
-        if (html && html.trim()) {
-            document.getElementById(containerId).innerHTML = html;
-        } else {
-            console.warn(`Respuesta vacía para ${sectionName}`);
-            document.getElementById(containerId).innerHTML = '';
-        }
-        
+        document.getElementById(containerId).innerHTML = html;
     } catch (error) {
-        console.error(`Error cargando ${sectionName}:`, error.message);
-        document.getElementById(containerId).innerHTML = '';
+        console.error(`Error loading section ${sectionName}:`, error);
+        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
     }
 }
 
@@ -36,12 +28,10 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
-    console.log('🚀 Cargando secciones estáticas...');
-
     // Cargar todas las secciones en paralelo
-    await Promise.allSettled(
-        sections.map(section => loadSection(section.name, section.container))
-    );
+    await Promise.all(sections.map(section => 
+        loadSection(section.name, section.container)
+    ));
 }
 
 // Traducciones completas
@@ -297,6 +287,7 @@ const TRANSLATIONS = {
 
 // Estado de la aplicación
 let currentLanguage = 'es';
+let currentSection = 'about';
 
 // Función para obtener traducción
 function getTranslation(key, language = currentLanguage) {
@@ -337,6 +328,7 @@ function showSection(sectionId) {
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.add('active');
+        currentSection = sectionId;
     }
     
     // Actualizar navegación
@@ -356,11 +348,89 @@ function showSection(sectionId) {
 
 // Función para manejar descarga de CV
 function downloadCV() {
-    // Abrir el CV en una nueva pestaña
-    const cvUrl = currentLanguage === 'es' 
-        ? './pdf/CV - cfernandez ESP 2025.pdf'
-        : './pdf/CV - cfernandez ENG 2025.pdf';
+    // Aquí puedes implementar la descarga del CV
+    // Por ejemplo, abrir un enlace directo al PDF
+    const cvUrl = 'https://your-domain.com/cv/Cristhian_Fernandez_CV.pdf';
     window.open(cvUrl, '_blank');
+}
+
+// Función para detectar navegadores problemáticos
+function isProblematicBrowser() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const problematicBrowsers = [
+        'instagram', 'fbav', 'fban', 'fbios', 'twitter', 
+        'tiktok', 'snapchat', 'whatsapp', 'telegram', 'line'
+    ];
+    
+    return problematicBrowsers.some(browser => userAgent.includes(browser));
+}
+
+// Función para mostrar mensaje de compatibilidad
+function showCompatibilityMessage() {
+    const container = document.getElementById('main-content');
+    if (container) {
+        const message = document.createElement('div');
+        message.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                padding: 2rem;
+                box-sizing: border-box;
+            ">
+                <div style="
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 8px;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                    max-width: 500px;
+                    text-align: center;
+                ">
+                    <h2 style="color: #2563eb; margin-bottom: 1rem;">Cristhian Fernandez</h2>
+                    <h3 style="color: #64748b; margin-bottom: 1.5rem;">AI / ML Engineer</h3>
+                    <p style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
+                        Esta página funciona mejor en un navegador externo. 
+                        Toca el botón de abajo para abrir en tu navegador predeterminado.
+                    </p>
+                    <button onclick="openInExternalBrowser()" style="
+                        background-color: #2563eb;
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 8px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        font-size: 1rem;
+                    ">
+                        Abrir en navegador externo
+                    </button>
+                </div>
+            </div>
+        `;
+        container.appendChild(message);
+    }
+}
+
+// Función para abrir en navegador externo
+function openInExternalBrowser() {
+    const currentUrl = window.location.href;
+    
+    try {
+        window.open(currentUrl, '_blank');
+    } catch (e) {
+        try {
+            window.location.href = currentUrl;
+        } catch (e2) {
+            alert('Por favor, copia esta URL y ábrela en tu navegador: ' + currentUrl);
+        }
+    }
 }
 
 // Función para manejar el scroll suave
@@ -383,6 +453,53 @@ function handleUrlHash() {
     }
 }
 
+// Función para inicializar la aplicación
+async function initializeApp() {
+    // Cargar todas las secciones dinámicamente
+    await loadAllSections();
+    
+    // Ocultar loading indicator
+    const loadingIndicator = document.getElementById('loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+    
+    // Mostrar contenido principal
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+        mainContent.style.display = 'block';
+    }
+    
+    // Cargar idioma guardado
+    const savedLanguage = localStorage.getItem('portfolio-language');
+    if (savedLanguage && TRANSLATIONS[savedLanguage]) {
+        currentLanguage = savedLanguage;
+        const languageSelector = document.getElementById('language-selector');
+        if (languageSelector) {
+            languageSelector.value = savedLanguage;
+        }
+    }
+    
+    // Actualizar traducciones
+    updateTranslations(currentLanguage);
+    
+    // Configurar eventos
+    setupEventListeners();
+    
+    // Manejar hash de URL
+    handleUrlHash();
+    
+    // Configurar scroll suave
+    handleSmoothScroll();
+    
+    // Detectar navegadores problemáticos
+    if (isProblematicBrowser()) {
+        setTimeout(() => {
+            showCompatibilityMessage();
+        }, 2000);
+    }
+}
+
 // Función para configurar event listeners
 function setupEventListeners() {
     // Selector de idioma
@@ -394,13 +511,13 @@ function setupEventListeners() {
     }
     
     // Botón de descarga de CV
-    const cvButtons = document.querySelectorAll('[onclick="downloadCV()"]');
-    cvButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
+    const cvButton = document.getElementById('btn-cv-download');
+    if (cvButton) {
+        cvButton.addEventListener('click', (e) => {
             e.preventDefault();
             downloadCV();
         });
-    });
+    }
     
     // Navegación
     const navLinks = document.querySelectorAll('.nav-link[data-section]');
@@ -416,65 +533,48 @@ function setupEventListeners() {
     window.addEventListener('hashchange', handleUrlHash);
 }
 
-// Función para inicializar la aplicación
-async function initializeApp() {
-    try {
-        // Ocultar loading indicator
-        const loadingIndicator = document.getElementById('loading-indicator');
-        if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-        }
-        
-        // Mostrar contenido principal
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.display = 'block';
-        }
-        
-        // Cargar todas las secciones estáticamente
-        await loadAllSections();
-        
-        // Cargar idioma guardado
-        const savedLanguage = localStorage.getItem('portfolio-language');
-        if (savedLanguage && TRANSLATIONS[savedLanguage]) {
-            currentLanguage = savedLanguage;
-            const languageSelector = document.getElementById('language-selector');
-            if (languageSelector) {
-                languageSelector.value = savedLanguage;
+// Función para mejorar la compatibilidad con Instagram
+function enhanceInstagramCompatibility() {
+    if (isProblematicBrowser()) {
+        // Agregar estilos adicionales para Instagram
+        const style = document.createElement('style');
+        style.textContent = `
+            body {
+                -webkit-overflow-scrolling: touch;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
             }
-        }
-        
-        // Actualizar traducciones
-        updateTranslations(currentLanguage);
-        
-        // Configurar eventos
-        setupEventListeners();
-        
-        // Manejar hash de URL
-        handleUrlHash();
-        
-        // Configurar scroll suave
-        handleSmoothScroll();
-        
-    } catch (error) {
-        console.error('Error en inicialización:', error);
-        // Asegurar que la página se muestre aunque haya errores
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.display = 'block';
-        }
-        const loadingIndicator = document.getElementById('loading-indicator');
-        if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-        }
+            
+            .app-container {
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+            }
+            
+            * {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        `;
+        document.head.appendChild(style);
     }
 }
 
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
+        enhanceInstagramCompatibility();
         initializeApp();
     });
 } else {
+    enhanceInstagramCompatibility();
     initializeApp();
 }
+
+// También verificar cuando la ventana se carga completamente
+window.addEventListener('load', () => {
+    if (isProblematicBrowser()) {
+        setTimeout(() => {
+            showCompatibilityMessage();
+        }, 1000);
+    }
+});
