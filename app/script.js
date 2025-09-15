@@ -3,21 +3,22 @@
 
 // Función para cargar secciones dinámicamente
 async function loadSection(sectionName, containerId) { 
-    try {
-        const response = await fetch(`sections/${sectionName}.html`);
-        if (!response.ok) {
-            throw new Error(`Error loading ${sectionName}: ${response.status}`);
-        }
-        const html = await response.text();
-        document.getElementById(containerId).innerHTML = html;
-    } catch (error) {
-        console.error(`Error loading section ${sectionName}:`, error);
-        document.getElementById(containerId).innerHTML = `<p>Error cargando la sección ${sectionName}</p>`;
+    console.log(`Loading section: ${sectionName}`);
+    const response = await fetch(`sections/${sectionName}.html`);
+    console.log(`Response for ${sectionName}:`, response.status, response.ok);
+    
+    if (!response.ok) {
+        throw new Error(`Error loading ${sectionName}: ${response.status}`);
     }
+    
+    const html = await response.text();
+    console.log(`HTML loaded for ${sectionName}, length:`, html.length);
+    document.getElementById(containerId).innerHTML = html;
 }
 
 // Función para cargar todas las secciones
 async function loadAllSections() {
+    console.log('Starting to load all sections...');
     const sections = [
         { name: 'header', container: 'header-container' },
         { name: 'navigation', container: 'navigation-container' },
@@ -28,10 +29,14 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
+    console.log('Sections to load:', sections);
+    
     // Cargar todas las secciones en paralelo
     await Promise.all(sections.map(section => 
         loadSection(section.name, section.container)
     ));
+    
+    console.log('All sections loaded successfully');
 }
 
 // Traducciones completas
@@ -388,19 +393,36 @@ function handleUrlHash() {
 
 // Función para inicializar la aplicación
 async function initializeApp() {
-    // Cargar todas las secciones dinámicamente
-    await loadAllSections();
+    console.log('Initializing app...');
+    
+    try {
+        // Cargar todas las secciones dinámicamente
+        console.log('Loading sections...');
+        await loadAllSections();
+        console.log('Sections loaded successfully');
+    } catch (error) {
+        console.error('Error loading sections:', error);
+        throw error; // Re-lanzar el error para depuración
+    }
     
     // Ocultar loading indicator
+    console.log('Hiding loading indicator...');
     const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
+        console.log('Loading indicator hidden');
+    } else {
+        console.error('Loading indicator not found!');
     }
     
     // Mostrar contenido principal
+    console.log('Showing main content...');
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
         mainContent.style.display = 'block';
+        console.log('Main content shown');
+    } else {
+        console.error('Main content not found!');
     }
     
     // Cargar idioma guardado
@@ -425,6 +447,7 @@ async function initializeApp() {
     // Configurar scroll suave
     handleSmoothScroll();
     
+    console.log('App initialized successfully');
 }
 
 // Función para configurar event listeners
@@ -463,7 +486,32 @@ function setupEventListeners() {
 
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM Content Loaded');
+        initializeApp().catch(error => {
+            console.error('Failed to initialize app:', error);
+            // Mostrar error en pantalla para depuración
+            document.body.innerHTML = `
+                <div style="padding: 20px; font-family: monospace; background: #f0f0f0;">
+                    <h1>Error de Carga</h1>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Stack:</strong></p>
+                    <pre>${error.stack}</pre>
+                </div>
+            `;
+        });
+    });
 } else {
-    initializeApp();
+    console.log('DOM already loaded');
+    initializeApp().catch(error => {
+        console.error('Failed to initialize app:', error);
+        document.body.innerHTML = `
+            <div style="padding: 20px; font-family: monospace; background: #f0f0f0;">
+                <h1>Error de Carga</h1>
+                <p><strong>Error:</strong> ${error.message}</p>
+                <p><strong>Stack:</strong></p>
+                <pre>${error.stack}</pre>
+            </div>
+        `;
+    });
 }
