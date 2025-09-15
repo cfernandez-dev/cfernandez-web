@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    <meta name="description" content="Personal portfolio of Cristhian Fernandez, AI/ML Engineer specialized in Python, Machine Learning and Web Development.">
     
     <!-- Meta tags para redes sociales -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Cristhian Fernandez - AI/ML Engineer">
     <meta property="og:title" content="Cristhian Fernandez | AI / ML Engineer">
-    <meta property="og:description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    <meta property="og:description" content="Personal portfolio of Cristhian Fernandez, AI/ML Engineer specialized in Python, Machine Learning and Web Development.">
     <meta property="og:image" content="https://via.placeholder.com/1200x630/2563eb/ffffff?text=Cristhian+Fernandez">
     <meta property="og:url" content="https://cristhianfernandez.dev">
     
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Cristhian Fernandez | AI / ML Engineer">
-    <meta property="twitter:description" content="Portfolio personal de Cristhian Fernandez, Ingeniero de IA/ML especializado en Python, Machine Learning y desarrollo web.">
+    <meta property="twitter:description" content="Personal portfolio of Cristhian Fernandez, AI/ML Engineer specialized in Python, Machine Learning and Web Development.">
     <meta property="twitter:image" content="https://via.placeholder.com/1200x630/2563eb/ffffff?text=Cristhian+Fernandez">
     
     <!-- Meta tags adicionales para compatibilidad -->
@@ -39,24 +39,45 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading indicator -->
-    <div id="loading-indicator" class="loading-indicator">
-        <div class="spinner"></div>
-        <p>Cargando...</p>
-    </div>
+    
 
     <!-- Main content -->
     <div id="main-content" class="app-container">
-        <!-- Header Section - Se carga dinámicamente -->
-        <div id="header-container"></div>
+        <!-- Header Section (inlined) -->
+        <header class="header-section">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">Cristhian Fernández Álvarez</h1>
+                    <h2 class="hero-subtitle">Artificial Intelligence Specialist | Data Scientist | Computer Vision | AWS Cloud</h2>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/cristhian-fernandez95" class="social-link" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>LinkedIn</a>
+                        <a href="https://github.com/cfernandez-dev" class="social-link" target="_blank" rel="noopener"><i class="fab fa-github"></i>GitHub</a>
+                        <a href="mailto:cefernal.dev@gmail.com" class="social-link"><i class="fas fa-envelope"></i>Email</a>
+                        <a href="pdf/CV - cfernandez ENG 2025.pdf" class="social-link" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i>Resume</a>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-        <!-- Navigation - Se carga dinámicamente -->
-        <div id="navigation-container"></div>
+        <!-- Navigation (inlined) -->
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#about" class="nav-link active">About</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- About Section - Se carga dinámicamente -->
-            <div id="about-container"></div>
+            <!-- About Section (inlined) -->
+            <section id="about" class="section-content active">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p class="section-text">Electronic engineer with a master's degree in automation and over 10 years of professional experience, combining 5 years in data science and machine learning with 5 years as a full‑stack developer. I integrate technical knowledge, analytical vision and hands‑on experience to design, implement and optimize AI solutions.</p>
+                    <p class="section-text">Throughout my career, I have participated in all stages of the AI project lifecycle: exploratory analysis and data preparation, model development and validation, as well as deployment to production. I have worked with machine learning and deep learning techniques applied to prediction, classification, natural language processing, and computer vision.</p>
+                    <p class="section-text">Passionate about research and innovation, I stay up‑to‑date with the latest advances in artificial intelligence and automation, always seeking to deliver high‑impact solutions with real value.</p>
+                </div>
+            </section>
 
             <!-- Experience Section - Se carga dinámicamente -->
             <div id="experience-container"></div>
@@ -67,12 +88,27 @@
             <!-- Skills Section - Se carga dinámicamente -->
             <div id="skills-container"></div>
 
-            <!-- Contact Section - Se carga dinámicamente -->
-            <div id="contact-container"></div>
+            <!-- Contact Section (inlined) -->
+            <section id="contact" class="section-content">
+                <h2 class="section-title">Let's Work Together!</h2>
+                <div class="contact-content">
+                    <p class="section-text">Do you have a project in mind? I'd love to learn more about your idea and how I can help you make it a reality. Feel free to reach out.</p>
+                    <div class="contact-info">
+                        <h3 class="subsection-title">Contact Information</h3>
+                        <div class="contact-item"><i class="fas fa-envelope"></i><span>cefernal.dev@gmail.com</span></div>
+                        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Cali, Colombia</span></div>
+                    </div>
+                    <div class="contact-actions">
+                        <a href="mailto:cefernal.dev@gmail.com" class="btn btn-primary">Send Message</a>
+                        <a href="https://linkedin.com/in/cristhian-fernandez95" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </section>
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="script.js"></script>
+    
 </body>
 </html>
