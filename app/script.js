@@ -2,7 +2,7 @@
 // Migrado desde el proyecto Dash original
 
 // Función para cargar secciones dinámicamente
-async function loadSection(sectionName, containerId) {
+async function loadSection(sectionName, containerId) { 
     try {
         const response = await fetch(`sections/${sectionName}.html`);
         if (!response.ok) {
