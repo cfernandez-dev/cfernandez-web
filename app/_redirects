@@ -1,0 +1,5 @@
+# Redirects para Vercel
+/ /index.html 200
+/test.html /test.html 200
+/sections/* /sections/:splat 200
+/pdf/* /pdf/:splat 200
