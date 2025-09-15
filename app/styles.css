@@ -76,43 +76,6 @@ body {
     margin: 0 0 2rem 0;
 }
 
-/* Language Selector */
-.language-selector-container {
-    margin: 1.5rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.language-label {
-    font-weight: 500;
-    color: var(--text-light);
-    font-size: 1rem;
-}
-
-.language-selector {
-    background-color: var(--bg-white);
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.language-selector:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    outline: none;
-}
-
-.language-selector:hover {
-    border-color: var(--primary-color);
-}
-
 /* Enlaces sociales */
 .social-links {
     margin-top: 1.5rem;
