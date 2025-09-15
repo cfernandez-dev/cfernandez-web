@@ -1,25 +1,10 @@
-// Sistema de traducciones y funcionalidades del portfolio
-// Migrado desde el proyecto Dash original
+// Sistema de traducciones y funcionalidades del portfolio - Versión estática
+// Carga secciones desde archivos HTML estáticos
 
-// Función para cargar secciones dinámicamente
+// Función para cargar secciones de forma estática
 async function loadSection(sectionName, containerId) {
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
-        
-        // Usar ruta absoluta para evitar problemas de CORS
-        const baseUrl = window.location.origin;
-        const response = await fetch(`${baseUrl}/sections/${sectionName}.html`, {
-            signal: controller.signal,
-            method: 'GET',
-            mode: 'cors',
-            cache: 'default',
-            headers: {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.9'
-            }
-        });
-        
-        clearTimeout(timeoutId);
+        const response = await fetch(`./sections/${sectionName}.html`);
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status} - ${response.statusText}`);
@@ -51,8 +36,7 @@ async function loadAllSections() {
         { name: 'contact', container: 'contact-container' }
     ];
 
-    console.log('🚀 Cargando secciones...');
-    console.log('📍 URL:', window.location.origin);
+    console.log('🚀 Cargando secciones estáticas...');
 
     // Cargar todas las secciones en paralelo
     await Promise.allSettled(
@@ -313,7 +297,6 @@ const TRANSLATIONS = {
 
 // Estado de la aplicación
 let currentLanguage = 'es';
-let currentSection = 'about';
 
 // Función para obtener traducción
 function getTranslation(key, language = currentLanguage) {
@@ -354,7 +337,6 @@ function showSection(sectionId) {
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.add('active');
-        currentSection = sectionId;
     }
     
     // Actualizar navegación
@@ -374,12 +356,12 @@ function showSection(sectionId) {
 
 // Función para manejar descarga de CV
 function downloadCV() {
-    // Aquí puedes implementar la descarga del CV
-    // Por ejemplo, abrir un enlace directo al PDF
-    const cvUrl = 'https://your-domain.com/cv/Cristhian_Fernandez_CV.pdf';
+    // Abrir el CV en una nueva pestaña
+    const cvUrl = currentLanguage === 'es' 
+        ? './pdf/CV - cfernandez ESP 2025.pdf'
+        : './pdf/CV - cfernandez ENG 2025.pdf';
     window.open(cvUrl, '_blank');
 }
-
 
 // Función para manejar el scroll suave
 function handleSmoothScroll() {
@@ -401,73 +383,56 @@ function handleUrlHash() {
     }
 }
 
-// Función para verificar conexión
-function checkConnection() {
-    return navigator.onLine;
-}
-
-// Función para mostrar indicador de conexión
-function showConnectionStatus() {
-    const status = document.createElement('div');
-    status.id = 'connection-status';
-    status.style.cssText = `
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        z-index: 1000;
-        transition: all 0.3s ease;
-    `;
-    
-    function updateStatus() {
-        if (navigator.onLine) {
-            status.textContent = '✓ Conectado';
-            status.style.backgroundColor = '#10b981';
-            status.style.color = 'white';
-        } else {
-            status.textContent = '⚠ Sin conexión';
-            status.style.backgroundColor = '#ef4444';
-            status.style.color = 'white';
-        }
+// Función para configurar event listeners
+function setupEventListeners() {
+    // Selector de idioma
+    const languageSelector = document.getElementById('language-selector');
+    if (languageSelector) {
+        languageSelector.addEventListener('change', (e) => {
+            changeLanguage(e.target.value);
+        });
     }
     
-    updateStatus();
-    document.body.appendChild(status);
+    // Botón de descarga de CV
+    const cvButtons = document.querySelectorAll('[onclick="downloadCV()"]');
+    cvButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            downloadCV();
+        });
+    });
     
-    window.addEventListener('online', updateStatus);
-    window.addEventListener('offline', updateStatus);
+    // Navegación
+    const navLinks = document.querySelectorAll('.nav-link[data-section]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('data-section');
+            showSection(sectionId);
+        });
+    });
+    
+    // Manejar cambios en el hash de la URL
+    window.addEventListener('hashchange', handleUrlHash);
 }
 
 // Función para inicializar la aplicación
 async function initializeApp() {
     try {
-        // Mostrar estado de conexión
-        showConnectionStatus();
-        
-        // Verificar conexión antes de cargar
-        if (!checkConnection()) {
-            console.warn('Sin conexión, usando cache local');
-        }
-        
-        // Mostrar contenido principal INMEDIATAMENTE
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.display = 'block';
-        }
-        
         // Ocultar loading indicator
         const loadingIndicator = document.getElementById('loading-indicator');
         if (loadingIndicator) {
             loadingIndicator.style.display = 'none';
         }
         
-        // Cargar todas las secciones dinámicamente (no bloquea la UI)
-        loadAllSections().catch(error => {
-            console.error('Error cargando secciones:', error);
-            // La página ya está visible, solo logueamos el error
-        });
+        // Mostrar contenido principal
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
+        
+        // Cargar todas las secciones estáticamente
+        await loadAllSections();
         
         // Cargar idioma guardado
         const savedLanguage = localStorage.getItem('portfolio-language');
@@ -491,7 +456,6 @@ async function initializeApp() {
         // Configurar scroll suave
         handleSmoothScroll();
         
-        
     } catch (error) {
         console.error('Error en inicialización:', error);
         // Asegurar que la página se muestre aunque haya errores
@@ -503,53 +467,6 @@ async function initializeApp() {
         if (loadingIndicator) {
             loadingIndicator.style.display = 'none';
         }
-    }
-}
-
-// Función para configurar event listeners
-function setupEventListeners() {
-    // Selector de idioma
-    const languageSelector = document.getElementById('language-selector');
-    if (languageSelector) {
-        languageSelector.addEventListener('change', (e) => {
-            changeLanguage(e.target.value);
-        });
-    }
-    
-    // Botón de descarga de CV
-    const cvButton = document.getElementById('btn-cv-download');
-    if (cvButton) {
-        cvButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            downloadCV();
-        });
-    }
-    
-    // Navegación
-    const navLinks = document.querySelectorAll('.nav-link[data-section]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
-            showSection(sectionId);
-        });
-    });
-    
-    // Manejar cambios en el hash de la URL
-    window.addEventListener('hashchange', handleUrlHash);
-}
-
-
-// Función de seguridad para mostrar la página
-function forceShowPage() {
-    const mainContent = document.getElementById('main-content');
-    const loadingIndicator = document.getElementById('loading-indicator');
-    
-    if (mainContent) {
-        mainContent.style.display = 'block';
-    }
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
     }
 }
 
