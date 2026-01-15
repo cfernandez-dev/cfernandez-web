@@ -374,8 +374,8 @@ function showSection(sectionId) {
 // Función para manejar descarga de CV
 function downloadCV() {
     const fileName = currentLanguage === 'en'
-        ? 'CV - cfernandez ENG 2025.pdf'
-        : 'CV - cfernandez ESP 2025.pdf';
+        ? 'CV - cfernandez ENG 2026.pdf'
+        : 'CV - cfernandez ESP 2026.pdf';
     const cvUrl = `pdf/${encodeURIComponent(fileName)}`;
     window.open(cvUrl, '_blank');
 }
